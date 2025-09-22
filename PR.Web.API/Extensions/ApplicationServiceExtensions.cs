@@ -7,7 +7,8 @@ using PR.Web.Application.People;
 using PR.Web.Infrastructure.Security;
 using PR.Web.Persistence;
 using PR.Persistence;
-using PR.Persistence.EntityFrameworkCore.PostgreSQL;
+//using PR.Persistence.EntityFrameworkCore.PostgreSQL;
+using PR.Persistence.EntityFrameworkCore.Sqlite;
 
 namespace PR.Web.API.Extensions;
 
@@ -23,15 +24,14 @@ public static class ApplicationServiceExtensions
         });
 
         // This section is for running locally
-        /*
         services.AddDbContext<DataContext>(opt => 
         {
-            //opt.UseSqlite(config.GetConnectionString("DefaultConnection"));
-            opt.UseNpgsql(config.GetConnectionString("DefaultConnection"));
+            opt.UseSqlite(config.GetConnectionString("DefaultConnection"));
+            //opt.UseNpgsql(config.GetConnectionString("DefaultConnection"));
             //opt.UseSqlServer(config.GetConnectionString("DefaultConnection"));
         });
-        */
 
+        /*
         // This section is for deploying to Heroku
         services.AddDbContext<DataContext>(options =>
         {
@@ -69,6 +69,7 @@ public static class ApplicationServiceExtensions
             // or from the environment variable from Heroku, use it to set up your DbContext.
             options.UseNpgsql(connStr);
         });
+        */
 
         services.AddCors(opt =>
         {
