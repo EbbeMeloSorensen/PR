@@ -7,7 +7,7 @@ using PR.Web.Application.People;
 using PR.Web.Infrastructure.Security;
 using PR.Web.Persistence;
 using PR.Persistence;
-using PR.Persistence.EntityFrameworkCore.Sqlite;
+using PR.Persistence.EntityFrameworkCore.PostgreSQL;
 
 namespace PR.Web.API.Extensions;
 
