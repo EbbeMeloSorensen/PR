@@ -17,8 +17,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PR.Persistence.EntityFramew
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PR.Persistence.EntityFrameworkCore.InMemory", "PR.Persistence.EntityFrameworkCore.InMemory\PR.Persistence.EntityFrameworkCore.InMemory.csproj", "{45946F56-19DF-9AE0-CCCE-51171C74272F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PR.Persistence.EntityFrameworkCore.Helper", "PR.Persistence.EntityFrameworkCore.Helper\PR.Persistence.EntityFrameworkCore.Helper.csproj", "{94005C96-42D9-746A-55B1-3F04E2CB0C24}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PR.Persistence.Versioned", "PR.Persistence.Versioned\PR.Persistence.Versioned.csproj", "{0999D592-FEAF-8F7E-B56F-AA248DF119C0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PR.Web.Persistence", "PR.Web.Persistence\PR.Web.Persistence.csproj", "{52704603-8E9B-653A-F9AD-5B5D489A1091}"
