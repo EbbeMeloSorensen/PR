@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
@@ -15,10 +16,10 @@ namespace PR.Web.Persistence.Migrations
                 name: "AspNetRoles",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
-                    NormalizedName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "TEXT", nullable: true)
+                    Id = table.Column<string>(type: "text", nullable: false),
+                    Name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    NormalizedName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -29,22 +30,22 @@ namespace PR.Web.Persistence.Migrations
                 name: "AspNetUsers",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "TEXT", nullable: false),
-                    DisplayName = table.Column<string>(type: "TEXT", nullable: false),
-                    UserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
-                    Email = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(type: "INTEGER", nullable: false),
-                    PasswordHash = table.Column<string>(type: "TEXT", nullable: true),
-                    SecurityStamp = table.Column<string>(type: "TEXT", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "TEXT", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "TEXT", nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "INTEGER", nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(type: "INTEGER", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "TEXT", nullable: true),
-                    LockoutEnabled = table.Column<bool>(type: "INTEGER", nullable: false),
-                    AccessFailedCount = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<string>(type: "text", nullable: false),
+                    DisplayName = table.Column<string>(type: "text", nullable: false),
+                    UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "boolean", nullable: false),
+                    PasswordHash = table.Column<string>(type: "text", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "text", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "text", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "text", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "boolean", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "boolean", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "boolean", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -55,7 +56,7 @@ namespace PR.Web.Persistence.Migrations
                 name: "CoordinateSystem",
                 columns: table => new
                 {
-                    ID = table.Column<Guid>(type: "TEXT", nullable: false)
+                    ID = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -66,7 +67,7 @@ namespace PR.Web.Persistence.Migrations
                 name: "Location",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -77,9 +78,9 @@ namespace PR.Web.Persistence.Migrations
                 name: "ObjectItems",
                 columns: table => new
                 {
-                    ID = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    AlternativeIdentificationText = table.Column<string>(type: "TEXT", nullable: true)
+                    ID = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    AlternativeIdentificationText = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -90,24 +91,24 @@ namespace PR.Web.Persistence.Migrations
                 name: "People",
                 columns: table => new
                 {
-                    ArchiveID = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Created = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Superseded = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Start = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    End = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    ID = table.Column<Guid>(type: "TEXT", nullable: false),
-                    FirstName = table.Column<string>(type: "TEXT", nullable: false),
-                    Surname = table.Column<string>(type: "TEXT", nullable: true),
-                    Nickname = table.Column<string>(type: "TEXT", nullable: true),
-                    Address = table.Column<string>(type: "TEXT", nullable: true),
-                    ZipCode = table.Column<string>(type: "TEXT", nullable: true),
-                    City = table.Column<string>(type: "TEXT", nullable: true),
-                    Birthday = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    Category = table.Column<string>(type: "TEXT", nullable: true),
-                    Description = table.Column<string>(type: "TEXT", nullable: true),
-                    Dead = table.Column<bool>(type: "INTEGER", nullable: true),
-                    Latitude = table.Column<double>(type: "REAL", nullable: true),
-                    Longitude = table.Column<double>(type: "REAL", nullable: true)
+                    ArchiveID = table.Column<Guid>(type: "uuid", nullable: false),
+                    Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Superseded = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Start = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    End = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    ID = table.Column<Guid>(type: "uuid", nullable: false),
+                    FirstName = table.Column<string>(type: "text", nullable: false),
+                    Surname = table.Column<string>(type: "text", nullable: true),
+                    Nickname = table.Column<string>(type: "text", nullable: true),
+                    Address = table.Column<string>(type: "text", nullable: true),
+                    ZipCode = table.Column<string>(type: "text", nullable: true),
+                    City = table.Column<string>(type: "text", nullable: true),
+                    Birthday = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    Category = table.Column<string>(type: "text", nullable: true),
+                    Description = table.Column<string>(type: "text", nullable: true),
+                    Dead = table.Column<bool>(type: "boolean", nullable: true),
+                    Latitude = table.Column<double>(type: "double precision", nullable: true),
+                    Longitude = table.Column<double>(type: "double precision", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -118,8 +119,8 @@ namespace PR.Web.Persistence.Migrations
                 name: "Smurfs",
                 columns: table => new
                 {
-                    ID = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: false)
+                    ID = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -130,8 +131,8 @@ namespace PR.Web.Persistence.Migrations
                 name: "VerticalDistance",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Dimension = table.Column<double>(type: "REAL", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Dimension = table.Column<double>(type: "double precision", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -142,11 +143,11 @@ namespace PR.Web.Persistence.Migrations
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    RoleId = table.Column<string>(type: "TEXT", nullable: false),
-                    ClaimType = table.Column<string>(type: "TEXT", nullable: true),
-                    ClaimValue = table.Column<string>(type: "TEXT", nullable: true)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    RoleId = table.Column<string>(type: "text", nullable: false),
+                    ClaimType = table.Column<string>(type: "text", nullable: true),
+                    ClaimValue = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -163,11 +164,11 @@ namespace PR.Web.Persistence.Migrations
                 name: "AspNetUserClaims",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    UserId = table.Column<string>(type: "TEXT", nullable: false),
-                    ClaimType = table.Column<string>(type: "TEXT", nullable: true),
-                    ClaimValue = table.Column<string>(type: "TEXT", nullable: true)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<string>(type: "text", nullable: false),
+                    ClaimType = table.Column<string>(type: "text", nullable: true),
+                    ClaimValue = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -184,10 +185,10 @@ namespace PR.Web.Persistence.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(type: "TEXT", nullable: false),
-                    ProviderKey = table.Column<string>(type: "TEXT", nullable: false),
-                    ProviderDisplayName = table.Column<string>(type: "TEXT", nullable: true),
-                    UserId = table.Column<string>(type: "TEXT", nullable: false)
+                    LoginProvider = table.Column<string>(type: "text", nullable: false),
+                    ProviderKey = table.Column<string>(type: "text", nullable: false),
+                    ProviderDisplayName = table.Column<string>(type: "text", nullable: true),
+                    UserId = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -204,8 +205,8 @@ namespace PR.Web.Persistence.Migrations
                 name: "AspNetUserRoles",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "TEXT", nullable: false),
-                    RoleId = table.Column<string>(type: "TEXT", nullable: false)
+                    UserId = table.Column<string>(type: "text", nullable: false),
+                    RoleId = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -228,10 +229,10 @@ namespace PR.Web.Persistence.Migrations
                 name: "AspNetUserTokens",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "TEXT", nullable: false),
-                    LoginProvider = table.Column<string>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Value = table.Column<string>(type: "TEXT", nullable: true)
+                    UserId = table.Column<string>(type: "text", nullable: false),
+                    LoginProvider = table.Column<string>(type: "text", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Value = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -248,7 +249,7 @@ namespace PR.Web.Persistence.Migrations
                 name: "Line",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -265,7 +266,7 @@ namespace PR.Web.Persistence.Migrations
                 name: "Point",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -282,7 +283,7 @@ namespace PR.Web.Persistence.Migrations
                 name: "Surface",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -299,8 +300,8 @@ namespace PR.Web.Persistence.Migrations
                 name: "Organisations",
                 columns: table => new
                 {
-                    ID = table.Column<Guid>(type: "TEXT", nullable: false),
-                    NickName = table.Column<string>(type: "TEXT", nullable: true)
+                    ID = table.Column<Guid>(type: "uuid", nullable: false),
+                    NickName = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -317,17 +318,17 @@ namespace PR.Web.Persistence.Migrations
                 name: "PersonAssociation",
                 columns: table => new
                 {
-                    ID = table.Column<Guid>(type: "TEXT", nullable: false),
-                    ArchiveID = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Created = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Superseded = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Start = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    End = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    SubjectPersonID = table.Column<Guid>(type: "TEXT", nullable: false),
-                    SubjectPersonArchiveID = table.Column<Guid>(type: "TEXT", nullable: false),
-                    ObjectPersonID = table.Column<Guid>(type: "TEXT", nullable: false),
-                    ObjectPersonArchiveID = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Text = table.Column<string>(type: "TEXT", nullable: false)
+                    ID = table.Column<Guid>(type: "uuid", nullable: false),
+                    ArchiveID = table.Column<Guid>(type: "uuid", nullable: false),
+                    Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Superseded = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Start = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    End = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    SubjectPersonID = table.Column<Guid>(type: "uuid", nullable: false),
+                    SubjectPersonArchiveID = table.Column<Guid>(type: "uuid", nullable: false),
+                    ObjectPersonID = table.Column<Guid>(type: "uuid", nullable: false),
+                    ObjectPersonArchiveID = table.Column<Guid>(type: "uuid", nullable: false),
+                    Text = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -350,15 +351,15 @@ namespace PR.Web.Persistence.Migrations
                 name: "PersonComments",
                 columns: table => new
                 {
-                    ArchiveID = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Created = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Superseded = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Start = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    End = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    ID = table.Column<Guid>(type: "TEXT", nullable: false),
-                    PersonID = table.Column<Guid>(type: "TEXT", nullable: false),
-                    PersonArchiveID = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Text = table.Column<string>(type: "TEXT", nullable: false)
+                    ArchiveID = table.Column<Guid>(type: "uuid", nullable: false),
+                    Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Superseded = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Start = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    End = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    ID = table.Column<Guid>(type: "uuid", nullable: false),
+                    PersonID = table.Column<Guid>(type: "uuid", nullable: false),
+                    PersonArchiveID = table.Column<Guid>(type: "uuid", nullable: false),
+                    Text = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -375,9 +376,9 @@ namespace PR.Web.Persistence.Migrations
                 name: "GeometricVolume",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    LowerVerticalDistanceID = table.Column<Guid>(type: "TEXT", nullable: true),
-                    UpperVerticalDistanceID = table.Column<Guid>(type: "TEXT", nullable: true)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    LowerVerticalDistanceID = table.Column<Guid>(type: "uuid", nullable: true),
+                    UpperVerticalDistanceID = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -406,10 +407,10 @@ namespace PR.Web.Persistence.Migrations
                 name: "AbsolutePoint",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    LatitudeCoordinate = table.Column<double>(type: "REAL", nullable: false),
-                    LongitudeCoordinate = table.Column<double>(type: "REAL", nullable: false),
-                    VerticalDistanceId = table.Column<Guid>(type: "TEXT", nullable: true)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    LatitudeCoordinate = table.Column<double>(type: "double precision", nullable: false),
+                    LongitudeCoordinate = table.Column<double>(type: "double precision", nullable: false),
+                    VerticalDistanceId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -432,10 +433,10 @@ namespace PR.Web.Persistence.Migrations
                 name: "LinePoint",
                 columns: table => new
                 {
-                    LineID = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Index = table.Column<int>(type: "INTEGER", nullable: false),
-                    PointId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    SequenceQuantity = table.Column<int>(type: "INTEGER", nullable: false)
+                    LineID = table.Column<Guid>(type: "uuid", nullable: false),
+                    Index = table.Column<int>(type: "integer", nullable: false),
+                    PointId = table.Column<Guid>(type: "uuid", nullable: false),
+                    SequenceQuantity = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -458,10 +459,10 @@ namespace PR.Web.Persistence.Migrations
                 name: "PointReference",
                 columns: table => new
                 {
-                    ID = table.Column<Guid>(type: "TEXT", nullable: false),
-                    OriginPointID = table.Column<Guid>(type: "TEXT", nullable: false),
-                    XVectorPointID = table.Column<Guid>(type: "TEXT", nullable: false),
-                    YVectorPointID = table.Column<Guid>(type: "TEXT", nullable: false)
+                    ID = table.Column<Guid>(type: "uuid", nullable: false),
+                    OriginPointID = table.Column<Guid>(type: "uuid", nullable: false),
+                    XVectorPointID = table.Column<Guid>(type: "uuid", nullable: false),
+                    YVectorPointID = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -496,11 +497,11 @@ namespace PR.Web.Persistence.Migrations
                 name: "RelativePoint",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    CoordinateSystemID = table.Column<Guid>(type: "TEXT", nullable: false),
-                    XCoordinateDimension = table.Column<double>(type: "REAL", nullable: false),
-                    YCoordinateDimension = table.Column<double>(type: "REAL", nullable: false),
-                    ZCoordinateDimension = table.Column<double>(type: "REAL", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    CoordinateSystemID = table.Column<Guid>(type: "uuid", nullable: false),
+                    XCoordinateDimension = table.Column<double>(type: "double precision", nullable: false),
+                    YCoordinateDimension = table.Column<double>(type: "double precision", nullable: false),
+                    ZCoordinateDimension = table.Column<double>(type: "double precision", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -523,9 +524,9 @@ namespace PR.Web.Persistence.Migrations
                 name: "CorridorArea",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    CenterLineID = table.Column<Guid>(type: "TEXT", nullable: false),
-                    WidthDimension = table.Column<double>(type: "REAL", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    CenterLineID = table.Column<Guid>(type: "uuid", nullable: false),
+                    WidthDimension = table.Column<double>(type: "double precision", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -548,10 +549,10 @@ namespace PR.Web.Persistence.Migrations
                 name: "Ellipse",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    CentrePointID = table.Column<Guid>(type: "TEXT", nullable: false),
-                    FirstConjugateDiameterPointID = table.Column<Guid>(type: "TEXT", nullable: false),
-                    SecondConjugateDiameterPointID = table.Column<Guid>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    CentrePointID = table.Column<Guid>(type: "uuid", nullable: false),
+                    FirstConjugateDiameterPointID = table.Column<Guid>(type: "uuid", nullable: false),
+                    SecondConjugateDiameterPointID = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -586,12 +587,12 @@ namespace PR.Web.Persistence.Migrations
                 name: "FanArea",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    VertexPointID = table.Column<Guid>(type: "TEXT", nullable: false),
-                    MinimumRangeDimension = table.Column<double>(type: "REAL", nullable: false),
-                    MaximumRangeDimension = table.Column<double>(type: "REAL", nullable: false),
-                    OrientationAngle = table.Column<double>(type: "REAL", nullable: false),
-                    SectorSizeAngle = table.Column<double>(type: "REAL", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    VertexPointID = table.Column<Guid>(type: "uuid", nullable: false),
+                    MinimumRangeDimension = table.Column<double>(type: "double precision", nullable: false),
+                    MaximumRangeDimension = table.Column<double>(type: "double precision", nullable: false),
+                    OrientationAngle = table.Column<double>(type: "double precision", nullable: false),
+                    SectorSizeAngle = table.Column<double>(type: "double precision", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -614,11 +615,11 @@ namespace PR.Web.Persistence.Migrations
                 name: "OrbitArea",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    FirstPointID = table.Column<Guid>(type: "TEXT", nullable: false),
-                    SecondPointID = table.Column<Guid>(type: "TEXT", nullable: false),
-                    OrbitAreaAlignmentCode = table.Column<int>(type: "INTEGER", nullable: false),
-                    WidthDimension = table.Column<double>(type: "REAL", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    FirstPointID = table.Column<Guid>(type: "uuid", nullable: false),
+                    SecondPointID = table.Column<Guid>(type: "uuid", nullable: false),
+                    OrbitAreaAlignmentCode = table.Column<int>(type: "integer", nullable: false),
+                    WidthDimension = table.Column<double>(type: "double precision", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -647,12 +648,12 @@ namespace PR.Web.Persistence.Migrations
                 name: "PolyArcArea",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    DefiningLineID = table.Column<Guid>(type: "TEXT", nullable: false),
-                    BearingOriginPointID = table.Column<Guid>(type: "TEXT", nullable: false),
-                    BeginBearingAngle = table.Column<double>(type: "REAL", nullable: false),
-                    EndBearingAngle = table.Column<double>(type: "REAL", nullable: false),
-                    ArcRadiusDimension = table.Column<double>(type: "REAL", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    DefiningLineID = table.Column<Guid>(type: "uuid", nullable: false),
+                    BearingOriginPointID = table.Column<Guid>(type: "uuid", nullable: false),
+                    BeginBearingAngle = table.Column<double>(type: "double precision", nullable: false),
+                    EndBearingAngle = table.Column<double>(type: "double precision", nullable: false),
+                    ArcRadiusDimension = table.Column<double>(type: "double precision", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -681,8 +682,8 @@ namespace PR.Web.Persistence.Migrations
                 name: "PolygonArea",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    BoundingLineID = table.Column<Guid>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    BoundingLineID = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -705,11 +706,11 @@ namespace PR.Web.Persistence.Migrations
                 name: "TrackArea",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    BeginPointID = table.Column<Guid>(type: "TEXT", nullable: false),
-                    EndPointID = table.Column<Guid>(type: "TEXT", nullable: false),
-                    LeftWidthDimension = table.Column<double>(type: "REAL", nullable: false),
-                    RightWidthDimension = table.Column<double>(type: "REAL", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    BeginPointID = table.Column<Guid>(type: "uuid", nullable: false),
+                    EndPointID = table.Column<Guid>(type: "uuid", nullable: false),
+                    LeftWidthDimension = table.Column<double>(type: "double precision", nullable: false),
+                    RightWidthDimension = table.Column<double>(type: "double precision", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -738,8 +739,8 @@ namespace PR.Web.Persistence.Migrations
                 name: "Units",
                 columns: table => new
                 {
-                    ID = table.Column<Guid>(type: "TEXT", nullable: false),
-                    FormalAbbreviatedName = table.Column<string>(type: "TEXT", nullable: false)
+                    ID = table.Column<Guid>(type: "uuid", nullable: false),
+                    FormalAbbreviatedName = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -756,9 +757,9 @@ namespace PR.Web.Persistence.Migrations
                 name: "ConeVolume",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    DefiningSurfaceID = table.Column<Guid>(type: "TEXT", nullable: false),
-                    VertexPointID = table.Column<Guid>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    DefiningSurfaceID = table.Column<Guid>(type: "uuid", nullable: false),
+                    VertexPointID = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -787,9 +788,9 @@ namespace PR.Web.Persistence.Migrations
                 name: "SphereVolume",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    CentrePointID = table.Column<Guid>(type: "TEXT", nullable: false),
-                    RadiusDimension = table.Column<double>(type: "REAL", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    CentrePointID = table.Column<Guid>(type: "uuid", nullable: false),
+                    RadiusDimension = table.Column<double>(type: "double precision", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -812,8 +813,8 @@ namespace PR.Web.Persistence.Migrations
                 name: "SurfaceVolume",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    DefiningSurfaceID = table.Column<Guid>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    DefiningSurfaceID = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
