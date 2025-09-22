@@ -20,7 +20,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PR.Persistence.EntityFrameworkCore.PostgreSQL\PR.Persistence.EntityFrameworkCore.PostgreSQL.csproj" />
-    <ProjectReference Include="..\PR.Web.Application\PR.Web.Application.csproj" />
     <ProjectReference Include="..\PR.Web.Infrastructure\PR.Web.Infrastructure.csproj" />
   </ItemGroup>
 
