@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PR.Web.Infrastructure", "PR
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PR.Web.API", "PR.Web.API\PR.Web.API.csproj", "{F6732751-069F-2783-36D7-387E043C640E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistence.Dummy", "Persistence.Dummy\Persistence.Dummy.csproj", "{F168FD3C-2DCC-41FB-BD54-E6E52665CAF9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -85,6 +87,10 @@ Global
 		{F6732751-069F-2783-36D7-387E043C640E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6732751-069F-2783-36D7-387E043C640E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6732751-069F-2783-36D7-387E043C640E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F168FD3C-2DCC-41FB-BD54-E6E52665CAF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F168FD3C-2DCC-41FB-BD54-E6E52665CAF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F168FD3C-2DCC-41FB-BD54-E6E52665CAF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F168FD3C-2DCC-41FB-BD54-E6E52665CAF9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
