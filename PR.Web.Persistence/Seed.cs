@@ -54,7 +54,7 @@ namespace PR.Web.Persistence
 
                 await context.People.AddRangeAsync(people);
                 await context.PersonComments.AddRangeAsync(personComments);
-                await context.Smurfs.AddRangeAsync(smurfs);
+                //await context.Smurfs.AddRangeAsync(smurfs);
                 await context.SaveChangesAsync();
             }
         }

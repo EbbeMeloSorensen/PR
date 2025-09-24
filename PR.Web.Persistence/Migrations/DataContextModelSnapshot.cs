@@ -373,21 +373,6 @@ namespace PR.Web.Persistence.Migrations
                     b.ToTable("PersonComments");
                 });
 
-            modelBuilder.Entity("PR.Domain.Entities.Smurfs.Smurf", b =>
-                {
-                    b.Property<Guid>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Smurfs");
-                });
-
             modelBuilder.Entity("PR.Web.Persistence.AppUser", b =>
                 {
                     b.Property<string>("Id")

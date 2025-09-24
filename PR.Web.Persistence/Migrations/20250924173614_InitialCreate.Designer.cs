@@ -11,8 +11,8 @@ using PR.Web.Persistence;
 namespace PR.Web.Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250922143701_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20250924173614_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -374,21 +374,6 @@ namespace PR.Web.Persistence.Migrations
                     b.HasIndex("PersonArchiveID");
 
                     b.ToTable("PersonComments");
-                });
-
-            modelBuilder.Entity("PR.Domain.Entities.Smurfs.Smurf", b =>
-                {
-                    b.Property<Guid>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Smurfs");
                 });
 
             modelBuilder.Entity("PR.Web.Persistence.AppUser", b =>

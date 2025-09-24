@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using PR.Web.API;
 using PR.Web.Persistence;
+using Persistence.Dummy;
 
 namespace API
 {
@@ -22,12 +23,24 @@ namespace API
                 var context = services.GetRequiredService<DataContext>();
                 var userManager = services.GetRequiredService<UserManager<AppUser>>();
                 await context.Database.MigrateAsync();
-                await Seed.SeedData(context, userManager);
+                await PR.Web.Persistence.Seed.SeedData(context, userManager);
             }
             catch (Exception ex)
             {
                 var logger = services.GetRequiredService<ILogger<Program>>();
-                logger.LogError(ex, "An error occured during migration");
+                logger.LogError(ex, "An error occured during migration (1)");
+            }
+
+            try
+            {
+                var context = services.GetRequiredService<DataContext2>();
+                await context.Database.MigrateAsync();
+                await Persistence.Dummy.Seed.SeedData(context);
+            }
+            catch (Exception ex)
+            {
+                var logger = services.GetRequiredService<ILogger<Program>>();
+                logger.LogError(ex, "An error occured during migration (2)");
             }
 
             await host.RunAsync();

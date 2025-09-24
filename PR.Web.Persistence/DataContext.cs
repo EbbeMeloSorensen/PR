@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using PR.Persistence.EntityFrameworkCore;
 using PR.Domain.Entities.PR;
-using PR.Domain.Entities.Smurfs;
+//using PR.Domain.Entities.Smurfs;
 using PR.Domain.Entities.C2IEDM.ObjectItems;
 
 namespace PR.Web.Persistence
@@ -14,7 +14,7 @@ namespace PR.Web.Persistence
         {
         }
 
-        public DbSet<Smurf> Smurfs { get; set; }
+        //public DbSet<Smurf> Smurfs { get; set; }
 
         // C2IEDM - ObjectItems
         public DbSet<ObjectItem> ObjectItems { get; set; }

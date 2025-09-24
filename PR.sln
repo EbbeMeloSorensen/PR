@@ -29,6 +29,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PR.Web.API", "PR.Web.API\PR
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistence.Dummy", "Persistence.Dummy\Persistence.Dummy.csproj", "{F168FD3C-2DCC-41FB-BD54-E6E52665CAF9}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}"
+	ProjectSection(SolutionItems) = preProject
+		Readme.txt = Readme.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,10 +68,6 @@ Global
 		{45946F56-19DF-9AE0-CCCE-51171C74272F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45946F56-19DF-9AE0-CCCE-51171C74272F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{45946F56-19DF-9AE0-CCCE-51171C74272F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{94005C96-42D9-746A-55B1-3F04E2CB0C24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{94005C96-42D9-746A-55B1-3F04E2CB0C24}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{94005C96-42D9-746A-55B1-3F04E2CB0C24}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{94005C96-42D9-746A-55B1-3F04E2CB0C24}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0999D592-FEAF-8F7E-B56F-AA248DF119C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0999D592-FEAF-8F7E-B56F-AA248DF119C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0999D592-FEAF-8F7E-B56F-AA248DF119C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
