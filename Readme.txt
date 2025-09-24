@@ -11,3 +11,43 @@ Næste trin må vel være noget alla følgende:
 2) Fjern den der dummy-persistence ting, så du igen er nede på to db contexts
 3) Rens op i afhængighederne, som anvist af ChatGpt, så applikationslaget ikke afhænger
    af ASP.NET Core
+
+
+Mermaid fra ChatGPT, som illustrerer konceptet:
+flowchart TD
+
+    subgraph Presentation["Presentation Layer"]
+        WPFApp["WPF Application"]
+        CLI["Console Application"]
+        API["Web API (ASP.NET Core)"]
+    end
+
+    subgraph Application["Application Layer"]
+        AppServices["Application Services (Use Cases)"]
+        IRepository["IRepository Interfaces"]
+        IUserService["IUserService Interface"]
+    end
+
+    subgraph Persistence["Persistence Layer"]
+        EFRepository["EF Repository (AppDataContext)"]
+        AppDataContext["AppDataContext (DbContext)"]
+    end
+
+    subgraph Identity["Identity Infrastructure"]
+        IdentityService["IdentityService (IUserService impl)"]
+        IdentityDataContext["IdentityDataContext (IdentityDbContext)"]
+    end
+
+    %% Connections
+    WPFApp --> AppServices
+    CLI --> AppServices
+    API --> AppServices
+
+    AppServices --> IRepository
+    AppServices --> IUserService
+
+    IRepository <--> EFRepository
+    EFRepository --> AppDataContext
+
+    IUserService <--> IdentityService
+    IdentityService --> IdentityDataContext
