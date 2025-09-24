@@ -10,7 +10,7 @@ namespace PR.Web.Persistence
     public class DataContext : IdentityDbContext<AppUser>
     {
         public DataContext(
-            DbContextOptions options) : base(options)
+            DbContextOptions<DataContext> options) : base(options)
         {
         }
 

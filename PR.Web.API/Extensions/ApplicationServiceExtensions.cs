@@ -9,6 +9,7 @@ using PR.Web.Persistence;
 using PR.Persistence;
 //using PR.Persistence.EntityFrameworkCore.PostgreSQL;
 using PR.Persistence.EntityFrameworkCore.Sqlite;
+using Persistence.Dummy;
 
 namespace PR.Web.API.Extensions;
 
@@ -30,6 +31,14 @@ public static class ApplicationServiceExtensions
             //opt.UseNpgsql(config.GetConnectionString("DefaultConnection"));
             //opt.UseSqlServer(config.GetConnectionString("DefaultConnection"));
         });
+
+        services.AddDbContext<DataContext2>(opt => 
+        {
+            opt.UseSqlite(config.GetConnectionString("DefaultConnection"));
+            //opt.UseNpgsql(config.GetConnectionString("DefaultConnection"));
+            //opt.UseSqlServer(config.GetConnectionString("DefaultConnection"));
+        });
+
 
         /*
         // This section is for deploying to Heroku

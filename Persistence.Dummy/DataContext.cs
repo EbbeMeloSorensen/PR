@@ -6,10 +6,10 @@ using PR.Domain.Entities.Smurfs;
 
 namespace Persistence.Dummy
 {
-    public class DataContext : DbContext
+    public class DataContext2 : DbContext
     {
-        public DataContext(
-            DbContextOptions options) : base(options)
+        public DataContext2(
+            DbContextOptions<DataContext2> options) : base(options)
         {
         }
 

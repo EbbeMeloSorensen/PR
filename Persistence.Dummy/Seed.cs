@@ -5,7 +5,7 @@ namespace Persistence.Dummy
     public class Seed
     {
         public static async Task SeedData(
-            DataContext context)
+            DataContext2 context)
         {
             if (!context.Smurfs.Any())
             {
