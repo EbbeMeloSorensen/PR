@@ -18,17 +18,17 @@ namespace PR.Web.Application.Smurfs
         public class Handler : IRequestHandler<Query, Result<PagedList<SmurfDto>>>
         {
             private readonly IMapper _mapper;
-            private readonly IUserAccessor _userAccessor;
             private readonly IUnitOfWorkFactory _unitOfWorkFactory;
+            private readonly IPagingHandler<SmurfDto> _pagingHandler;
 
             public Handler(
                 IMapper mapper,
-                IUserAccessor userAccessor,
-                IUnitOfWorkFactory unitOfWorkFactory)
+                IUnitOfWorkFactory unitOfWorkFactory,
+                IPagingHandler<SmurfDto> pagingHandler)
             {
                 _mapper = mapper;
-                _userAccessor = userAccessor;
                 _unitOfWorkFactory = unitOfWorkFactory;
+                _pagingHandler = pagingHandler;
             }
 
             public async Task<Result<PagedList<SmurfDto>>> Handle(
@@ -64,7 +64,7 @@ namespace PR.Web.Application.Smurfs
                 var result = _mapper.Map<IEnumerable<SmurfDto>>(smurfs);
 
                 return Result<PagedList<SmurfDto>>.Success(
-                    PagedList<SmurfDto>.Create(result, request.Params.PageNumber,
+                    _pagingHandler.Create(result, request.Params.PageNumber,
                         request.Params.PageSize)
                 );
             }

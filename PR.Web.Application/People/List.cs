@@ -20,17 +20,17 @@ public class List
     public class Handler : IRequestHandler<Query, Result<PagedList<PersonDto>>>
     {
         private readonly IMapper _mapper;
-        private readonly IUserAccessor _userAccessor;
         private readonly IUnitOfWorkFactory _unitOfWorkFactory;
+        private readonly IPagingHandler<PersonDto> _pagingHandler;
 
         public Handler(
-            IMapper mapper, 
-            IUserAccessor userAccessor,
-            IUnitOfWorkFactory unitOfWorkFactory)
+            IMapper mapper,
+            IUnitOfWorkFactory unitOfWorkFactory,
+            IPagingHandler<PersonDto> pagingHandler)
         {
             _mapper = mapper;
-            _userAccessor = userAccessor;
             _unitOfWorkFactory = new UnitOfWorkFactoryFacade(unitOfWorkFactory);
+            _pagingHandler = pagingHandler;
         }
 
         public async Task<Result<PagedList<PersonDto>>> Handle(
@@ -88,9 +88,9 @@ public class List
             var people = await unitOfWork.People.Find(predicates);
 
             var result = _mapper.Map<IEnumerable<PersonDto>>(people);
-
+ 
             return Result<PagedList<PersonDto>>.Success(
-                PagedList<PersonDto>.Create(result, request.Params.PageNumber,
+                _pagingHandler.Create(result, request.Params.PageNumber,
                     request.Params.PageSize)
             );
         }

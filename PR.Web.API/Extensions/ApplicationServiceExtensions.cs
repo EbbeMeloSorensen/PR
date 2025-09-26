@@ -10,6 +10,8 @@ using PR.Persistence;
 //using PR.Persistence.EntityFrameworkCore.PostgreSQL;
 using PR.Persistence.EntityFrameworkCore.Sqlite;
 using Persistence.Dummy;
+using PR.Web.Application.Smurfs;
+using PR.Web.Infrastructure;
 
 namespace PR.Web.API.Extensions;
 
@@ -91,10 +93,13 @@ public static class ApplicationServiceExtensions
                     .WithOrigins("http://localhost:3000");
             });
         });
-        services.AddMediatR(assemblies: typeof(List.Handler).Assembly);
+        services.AddMediatR(assemblies: typeof(Application.Smurfs.List.Handler).Assembly);
+        services.AddMediatR(assemblies: typeof(Application.People.List.Handler).Assembly);
         services.AddAutoMapper(assemblies: typeof(MappingProfiles).Assembly);
         services.AddScoped<IUserAccessor, UserAccessor>();
         services.AddScoped<IUnitOfWorkFactory, UnitOfWorkFactory>();
+        services.AddScoped<IPagingHandler<SmurfDto>, PagingHandler<SmurfDto>>();
+        services.AddScoped<IPagingHandler<PersonDto>, PagingHandler<PersonDto>>();
 
         return services;
     }
