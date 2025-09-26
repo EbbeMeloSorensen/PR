@@ -64,7 +64,7 @@ namespace PR.Web.Application.Smurfs
                 var result = _mapper.Map<IEnumerable<SmurfDto>>(smurfs);
 
                 return Result<PagedList<SmurfDto>>.Success(
-                    await PagedList<SmurfDto>.Create(result, request.Params.PageNumber,
+                    PagedList<SmurfDto>.Create(result, request.Params.PageNumber,
                         request.Params.PageSize)
                 );
             }

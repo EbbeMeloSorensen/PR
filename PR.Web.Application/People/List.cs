@@ -90,7 +90,7 @@ public class List
             var result = _mapper.Map<IEnumerable<PersonDto>>(people);
 
             return Result<PagedList<PersonDto>>.Success(
-                await PagedList<PersonDto>.Create(result, request.Params.PageNumber,
+                PagedList<PersonDto>.Create(result, request.Params.PageNumber,
                     request.Params.PageSize)
             );
         }
