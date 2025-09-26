@@ -46,6 +46,19 @@ namespace PR.Web.Application.Smurfs
                         x.Name.ToLower().Contains(filter));
                 }
 
+                // Det her er nok ikke super optimalt sådan rent båndbreddemæssigt....
+                // Man finder alle de items, der passer med filteret, dvs det kan i praksis 
+                // sagtens være alle items, og så filtrerer man det ned til den side, man er
+                // interesseret i bagefter. Det virker for få items men har nok en kedelig
+                // performance penalty for mange items.
+
+                // Det kommer sig nok af, at den originale implementation af denne metode
+                // gjorde brug af dbcontexten fra EntityFrameworkCore, så der kunne man jo
+                // tilføje pagination direkte i forespørgslen til databasen.
+                // Da du så sadlede om til et UnitOfWork mønster, så mistede du den mulighed,
+                // fordi dit repository interface ikke understøtter pagination,
+                // men det kan du jo bringe det til at kunne.
+
                 var smurfs = await unitOfWork.Smurfs.Find(predicates);
 
                 var result = _mapper.Map<IEnumerable<SmurfDto>>(smurfs);
