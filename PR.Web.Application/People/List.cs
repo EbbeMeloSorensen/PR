@@ -94,23 +94,5 @@ public class List
                     request.Params.PageSize)
             );
         }
-
-        private List<bool> ConvertToBoolList(
-            IEnumerable<string> items)
-        {
-            var result = new List<bool>();
-
-            if (items.Contains("true"))
-            {
-                result.Add(true);
-            }
-
-            if (items.Contains("false"))
-            {
-                result.Add(false);
-            }
-
-            return result;
-        }
     }
 }
