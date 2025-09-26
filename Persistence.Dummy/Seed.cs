@@ -1,4 +1,4 @@
-using PR.Persistence.EntityFrameworkCore;
+using PR.Domain.Entities.Smurfs;
 
 namespace Persistence.Dummy
 {
@@ -9,14 +9,24 @@ namespace Persistence.Dummy
         {
             if (!context.Smurfs.Any())
             {
-                Seeding.CreateDataForSeeding(
-                    true, 
-                    out var people, 
-                    out var personComments,
-                    out var smurfs);
+                var smurfs = new List<Smurf>();
+                smurfs.Add(new Smurf { Name = "Gammelsmølf" });
+                smurfs.Add(new Smurf { Name = "Smølfine" });
+                smurfs.Add(new Smurf { Name = "Skæmtesmølf" });
+                smurfs.Add(new Smurf { Name = "Dydigsmølfen" });
+                smurfs.Add(new Smurf { Name = "Gnavensmølfen" });
+                smurfs.Add(new Smurf { Name = "Flyvesmølfen" });
+                smurfs.Add(new Smurf { Name = "Pyntesmølfen" });
+                smurfs.Add(new Smurf { Name = "Dummesmølfen" });
+                smurfs.Add(new Smurf { Name = "Dovensmølfen" });
+                smurfs.Add(new Smurf { Name = "Stærksmølfen" });
+                smurfs.Add(new Smurf { Name = "Ædesmølfen" });
 
-                // await context.People.AddRangeAsync(people);
-                // await context.PersonComments.AddRangeAsync(personComments);
+                Enumerable.Range(1, 100).ToList().ForEach(i =>
+                {
+                    smurfs.Add(new Smurf { Name = $"Ekstra smølf {i}" });
+                });
+
                 await context.Smurfs.AddRangeAsync(smurfs);
                 await context.SaveChangesAsync();
             }
