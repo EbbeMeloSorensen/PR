@@ -1,12 +1,10 @@
 ﻿using AutoMapper;
 using FluentValidation;
 using MediatR;
-using PR.Domain;
 using PR.Domain.Entities.PR;
 using PR.Persistence;
 using PR.Persistence.Versioned;
 using PR.Web.Application.Core;
-using PR.Web.Persistence;
 
 namespace PR.Web.Application.People;
 
@@ -27,16 +25,13 @@ public class Edit
 
     public class Handler : IRequestHandler<Command, Result<Unit>>
     {
-        private readonly DataContext _context;
         private readonly IMapper _mapper;
         private readonly IUnitOfWorkFactory _unitOfWorkFactory;
 
         public Handler(
-            DataContext context, 
             IMapper mapper,
             IUnitOfWorkFactory unitOfWorkFactory)
         {
-            _context = context;
             _mapper = mapper;
             _unitOfWorkFactory = new UnitOfWorkFactoryFacade(unitOfWorkFactory);
         }

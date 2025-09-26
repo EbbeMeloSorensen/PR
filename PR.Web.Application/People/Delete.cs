@@ -2,7 +2,6 @@
 using PR.Persistence;
 using PR.Persistence.Versioned;
 using PR.Web.Application.Core;
-using PR.Web.Persistence;
 
 namespace PR.Web.Application.People;
 
@@ -15,14 +14,11 @@ public class Delete
 
     public class Handler : IRequestHandler<Command, Result<Unit>>
     {
-        private readonly DataContext _context;
         private readonly IUnitOfWorkFactory _unitOfWorkFactory;
 
         public Handler(
-            DataContext context,
             IUnitOfWorkFactory unitOfWorkFactory)
         {
-            _context = context;
             _unitOfWorkFactory = unitOfWorkFactory;
             _unitOfWorkFactory = new UnitOfWorkFactoryFacade(unitOfWorkFactory);
         }

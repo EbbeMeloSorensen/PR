@@ -14,7 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PR.Persistence.Versioned\PR.Persistence.Versioned.csproj" />
-    <ProjectReference Include="..\PR.Web.Persistence\PR.Web.Persistence.csproj" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.5" />
   </ItemGroup>
 
 </Project>
