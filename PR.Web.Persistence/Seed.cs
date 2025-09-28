@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using PR.Persistence.EntityFrameworkCore;
 
 namespace PR.Web.Persistence
 {
@@ -9,7 +8,7 @@ namespace PR.Web.Persistence
             DataContext context,
             UserManager<AppUser> userManager)
         {
-            if (!userManager.Users.Any() && !context.People.Any())
+            if (!userManager.Users.Any())
             {
                 var users = new List<AppUser>
                 {
@@ -46,15 +45,6 @@ namespace PR.Web.Persistence
                     }
                 }
 
-                Seeding.CreateDataForSeeding(
-                    true, 
-                    out var people, 
-                    out var personComments,
-                    out var smurfs);
-
-                await context.People.AddRangeAsync(people);
-                await context.PersonComments.AddRangeAsync(personComments);
-                //await context.Smurfs.AddRangeAsync(smurfs);
                 await context.SaveChangesAsync();
             }
         }

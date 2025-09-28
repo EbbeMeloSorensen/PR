@@ -8,7 +8,7 @@ using PR.Persistence.EntityFrameworkCore.EntityConfigurations.PR;
 
 namespace PR.Persistence.EntityFrameworkCore
 {
-    public class PRDbContextBase : DbContext
+    public abstract class PRDbContextBase : DbContext
     {
         public static bool Versioned { get; set; }
 

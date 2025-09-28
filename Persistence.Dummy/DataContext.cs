@@ -20,6 +20,12 @@ namespace Persistence.Dummy
 
         public DbSet<Smurf> Smurfs { get; set; }
 
+        protected override void OnConfiguring(
+            DbContextOptionsBuilder optionsBuilder)
+        {
+            var a = 0;
+        }
+
         protected override void OnModelCreating(
             ModelBuilder builder)
         {
