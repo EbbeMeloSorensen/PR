@@ -1,8 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-//using PR.Persistence.EntityFrameworkCore;
-//using PR.Domain.Entities.PR;
 using PR.Domain.Entities.Smurfs;
-//using PR.Domain.Entities.C2IEDM.ObjectItems;
 
 // NB For at lave migration for denne DataContext skal man eksekvere dette:
 // dotnet ef migrations add InitialMigration -p Persistence.Dummy -s PR.Web.API --context DataContext2
@@ -19,15 +16,6 @@ namespace Persistence.Dummy
         }
 
         public DbSet<Smurf> Smurfs { get; set; }
-
-        protected override void OnModelCreating(
-            ModelBuilder builder)
-        {
-            // PRDbContextBase.Versioned = true;
-            // PRDbContextBase.Configure(builder);
-
-            base.OnModelCreating(builder);
-        }
     }
 }
 
