@@ -11,7 +11,7 @@ using Persistence.Dummy;
 namespace Persistence.Dummy.Migrations
 {
     [DbContext(typeof(DataContext2))]
-    [Migration("20250924075932_InitialMigration")]
+    [Migration("20250929134417_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -20,7 +20,7 @@ namespace Persistence.Dummy.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.5");
 
-            modelBuilder.Entity("PR.Domain.Entities.Smurfs.Smurf", b =>
+            modelBuilder.Entity("Persistence.Dummy.Dummy", b =>
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
@@ -32,7 +32,7 @@ namespace Persistence.Dummy.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Smurfs");
+                    b.ToTable("Dummies");
                 });
 #pragma warning restore 612, 618
         }

@@ -23,7 +23,6 @@ I hvilken henseender er det lige at APIen afhænger af application laget?
 - De controllers, der defineres i APIen sender videre til Queries, Commands og Handlers i 
   application laget
 
-
 Mermaid fra ChatGPT, som illustrerer konceptet:
 flowchart TD
 
@@ -106,3 +105,24 @@ flowchart TD
 
     %% Auth-only flow
     API -->|Auth ops 🔴| IdentityFramework
+
+
+
+
+Opdatering 29-09-2025:
+  Jeg havde et gennembrud fredag den 26. september, hvor det lykkedes mig at fjerne afhængighederne
+  fra Application laget til ASP.Net Core og endda Entity Framework Core ved at introducere en
+  abstraktion for paging fukntionaliteten (IPagingHandler). Det virker med login og at det at hente
+  smurfs, men jeg har også fået wrecket det at hente personer - det er ikke uventet, idet
+  de 2 migrations, som er i spil, nu ikke længere trækker på PR.Persistence.EntityFramework i
+  forbindelse med at generere tabeller i databasen. Jeg prøvede så at refaktorere det således at
+  APIen trak på den DbContext, som bor i PR.Persistence.EntityFrameworkCore for at migrere person-
+  relaterede tabeller. Det lykkedes ikke, og en af årsagerne er, at den ifølge ChatGPT er lavet på
+  en lidt gammeldags måde, f.eks derved at den ikke har en constructor, der tager en DbContextOptions
+  som parameter. Bemærk i øvrigt, at det skulle kunne lade sig gøre at slippe for de der 
+  dbms-specifikke plugins med deres ConnectionStringProviders, da essensen af den nye metode er, 
+  at dbcontexts struktureres "udefra". ChatGPT kender til principperne.
+
+  Spørgsmålet er nu, hvordan faen jeg bevæger mig videre.. Jeg har nok i hvert fald gavn af at
+  tage de der C2IEDM-ting ud, og muligvis bør jeg også tage personer ud. Et andet spor kunne være
+  at lave Persistence.Dummy ud, så den ikke dealer i smurfs, men måske dummies...

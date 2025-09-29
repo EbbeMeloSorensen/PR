@@ -12,7 +12,7 @@ namespace Persistence.Dummy.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Smurfs",
+                name: "Dummies",
                 columns: table => new
                 {
                     ID = table.Column<Guid>(type: "TEXT", nullable: false),
@@ -20,7 +20,7 @@ namespace Persistence.Dummy.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Smurfs", x => x.ID);
+                    table.PrimaryKey("PK_Dummies", x => x.ID);
                 });
         }
 
@@ -28,7 +28,7 @@ namespace Persistence.Dummy.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Smurfs");
+                name: "Dummies");
         }
     }
 }

@@ -1,5 +1,3 @@
-using PR.Domain.Entities.Smurfs;
-
 namespace Persistence.Dummy
 {
     public class Seed
@@ -7,27 +5,16 @@ namespace Persistence.Dummy
         public static async Task SeedData(
             DataContext2 context)
         {
-            if (!context.Smurfs.Any())
+            if (!context.Dummies.Any())
             {
-                var smurfs = new List<Smurf>();
-                smurfs.Add(new Smurf { Name = "Gammelsmølf" });
-                smurfs.Add(new Smurf { Name = "Smølfine" });
-                smurfs.Add(new Smurf { Name = "Skæmtesmølf" });
-                smurfs.Add(new Smurf { Name = "Dydigsmølfen" });
-                smurfs.Add(new Smurf { Name = "Gnavensmølfen" });
-                smurfs.Add(new Smurf { Name = "Flyvesmølfen" });
-                smurfs.Add(new Smurf { Name = "Pyntesmølfen" });
-                smurfs.Add(new Smurf { Name = "Dummesmølfen" });
-                smurfs.Add(new Smurf { Name = "Dovensmølfen" });
-                smurfs.Add(new Smurf { Name = "Stærksmølfen" });
-                smurfs.Add(new Smurf { Name = "Ædesmølfen" });
+                var dummies = new List<Dummy>();
 
-                Enumerable.Range(1, 100).ToList().ForEach(i =>
+                Enumerable.Range(1, 10).ToList().ForEach(i =>
                 {
-                    smurfs.Add(new Smurf { Name = $"Ekstra smølf {i}" });
+                    dummies.Add(new Dummy { Name = $"Dummy {i}" });
                 });
 
-                await context.Smurfs.AddRangeAsync(smurfs);
+                await context.Dummies.AddRangeAsync(dummies);
                 await context.SaveChangesAsync();
             }
         }

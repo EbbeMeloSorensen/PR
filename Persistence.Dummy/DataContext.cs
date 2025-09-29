@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PR.Domain.Entities.Smurfs;
 
 // NB For at lave migration for denne DataContext skal man eksekvere dette:
 // dotnet ef migrations add InitialMigration -p Persistence.Dummy -s PR.Web.API --context DataContext2
@@ -15,7 +14,13 @@ namespace Persistence.Dummy
         {
         }
 
-        public DbSet<Smurf> Smurfs { get; set; }
+        public DbSet<Dummy> Dummies { get; set; }
+
+        protected override void OnModelCreating(
+            ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfiguration(new DummyConfiguration());
+        }
     }
 }
 
