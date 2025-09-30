@@ -19,6 +19,11 @@ namespace PR.Persistence.EntityFrameworkCore
             Versioned = true;
         }
 
+        public PRDbContextBase(
+            DbContextOptions<PRDbContextBase> options) : base(options)
+        {
+        }
+
         public DbSet<Smurf> Smurfs { get; set; }
 
         public DbSet<Domain.Entities.PR.Person> People { get; set; }

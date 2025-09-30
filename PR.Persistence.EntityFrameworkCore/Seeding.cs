@@ -3,7 +3,7 @@ using PR.Domain.Entities.Smurfs;
 
 namespace PR.Persistence.EntityFrameworkCore
 {
-    public static class Seeding
+    public class Seeding
     {
         private static DateTime _timeOfPopulation = new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc);
         private static DateTime _maxDate = new DateTime(9999, 12, 31, 23, 59, 59, DateTimeKind.Utc);
@@ -11,7 +11,7 @@ namespace PR.Persistence.EntityFrameworkCore
         // We're seeding the database with characters from the Star Wars Universe
         // https://cdn.shopify.com/s/files/1/1835/6621/files/star-wars-family-tree-episde-9.png?v=1578255836
 
-        public static void SeedDatabase(
+        public static async Task SeedDatabase(
             PRDbContextBase context)
         {
             if (context.People.Any()) return;
@@ -22,10 +22,9 @@ namespace PR.Persistence.EntityFrameworkCore
                 out var personComments,
                 out var smurfs);
 
-            context.Smurfs.AddRange(smurfs);
-
-            context.People.AddRange(people);
-            context.PersonComments.AddRange(personComments);
+            await context.Smurfs.AddRangeAsync(smurfs);
+            await context.People.AddRangeAsync(people);
+            await context.PersonComments.AddRangeAsync(personComments);
 
             context.SaveChanges();
         }

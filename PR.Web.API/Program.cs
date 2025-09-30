@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using PR.Web.API;
 using PR.Web.Persistence;
 using Persistence.Dummy;
+using PR.Persistence.EntityFrameworkCore;
 
 namespace API
 {
@@ -41,6 +42,18 @@ namespace API
             {
                 var logger = services.GetRequiredService<ILogger<Program>>();
                 logger.LogError(ex, "An error occured during migration (2)");
+            }
+
+            try
+            {
+                var context = services.GetRequiredService<PRDbContextBase>();
+                await context.Database.MigrateAsync();
+                await Seeding.SeedDatabase(context);
+            }
+            catch (Exception ex)
+            {
+                var logger = services.GetRequiredService<ILogger<Program>>();
+                logger.LogError(ex, "An error occured during migration (3)");
             }
 
             await host.RunAsync();

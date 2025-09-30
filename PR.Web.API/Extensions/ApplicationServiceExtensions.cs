@@ -7,8 +7,9 @@ using PR.Web.Application.People;
 using PR.Web.Infrastructure.Security;
 using PR.Web.Persistence;
 using PR.Persistence;
+using PR.Persistence.EntityFrameworkCore;
 //using PR.Persistence.EntityFrameworkCore.PostgreSQL;
-using PR.Persistence.EntityFrameworkCore.Sqlite;
+//using PR.Persistence.EntityFrameworkCore.Sqlite;
 using Persistence.Dummy;
 using PR.Web.Application.Smurfs;
 using PR.Web.Infrastructure;
@@ -34,13 +35,25 @@ public static class ApplicationServiceExtensions
             //opt.UseSqlServer(config.GetConnectionString("DefaultConnection"));
         });
 
-        services.AddDbContext<DataContext2>(opt => 
+         services.AddDbContext<DataContext2>(opt => 
         {
             opt.UseSqlite(config.GetConnectionString("DefaultConnection"));
             //opt.UseNpgsql(config.GetConnectionString("DefaultConnection"));
             //opt.UseSqlServer(config.GetConnectionString("DefaultConnection"));
         });
 
+        // Bemærk: Man skal ikke gøre dette, hvis man også opererer med AddDbContextFactory,
+        // hvilket vi jo gør for at få vores UnitOfWork til at virke.
+        // Som ChatGPT formulerer det: Use either AddDbContext or AddDbContextFactory for a given DbContext, not both.
+        // services.AddDbContext<PRDbContextBase>(opt => 
+        // {
+        //     opt.UseSqlite(config.GetConnectionString("DefaultConnection"));
+        //     //opt.UseNpgsql(config.GetConnectionString("DefaultConnection"));
+        //     //opt.UseSqlServer(config.GetConnectionString("DefaultConnection"));
+        // });
+
+        services.AddDbContextFactory<PRDbContextBase>(options =>
+            options.UseSqlite(config.GetConnectionString("DefaultConnection")));        
 
         /*
         // This section is for deploying to Heroku
