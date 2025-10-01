@@ -28,14 +28,28 @@ public static class ApplicationServiceExtensions
         });
 
         // This section is for running locally
-        services.AddDbContext<DataContext>(opt => 
+        // services.AddDbContext<DataContext>(opt => 
+        // {
+        //     opt.UseSqlite(config.GetConnectionString("DefaultConnection"));
+        //     //opt.UseNpgsql(config.GetConnectionString("DefaultConnection"));
+        //     //opt.UseSqlServer(config.GetConnectionString("DefaultConnection"));
+        // });
+
+        services.AddIdentityPersistence<DataContext>(opt => 
         {
             opt.UseSqlite(config.GetConnectionString("DefaultConnection"));
             //opt.UseNpgsql(config.GetConnectionString("DefaultConnection"));
             //opt.UseSqlServer(config.GetConnectionString("DefaultConnection"));
         });
 
-         services.AddDbContext<DataContext2>(opt => 
+        // services.AddDbContext<DataContext2>(opt => 
+        // {
+        //     opt.UseSqlite(config.GetConnectionString("DefaultConnection"));
+        //     //opt.UseNpgsql(config.GetConnectionString("DefaultConnection"));
+        //     //opt.UseSqlServer(config.GetConnectionString("DefaultConnection"));
+        // });
+
+        services.AddDummyPersistence<DataContext2>(opt => 
         {
             opt.UseSqlite(config.GetConnectionString("DefaultConnection"));
             //opt.UseNpgsql(config.GetConnectionString("DefaultConnection"));
@@ -52,8 +66,11 @@ public static class ApplicationServiceExtensions
         //     //opt.UseSqlServer(config.GetConnectionString("DefaultConnection"));
         // });
 
-        services.AddDbContextFactory<PRDbContextBase>(options =>
-            options.UseSqlite(config.GetConnectionString("DefaultConnection")));        
+        // services.AddDbContextFactory<PRDbContextBase>(options =>
+        //     options.UseSqlite(config.GetConnectionString("DefaultConnection")));        
+
+        services.AddAppDataPersistence<PRDbContextBase>(options =>
+            options.UseSqlite(config.GetConnectionString("DefaultConnection")));
 
         /*
         // This section is for deploying to Heroku
