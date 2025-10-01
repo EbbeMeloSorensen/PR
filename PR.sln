@@ -28,6 +28,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PR.UI.Console", "PR.UI.Console\PR.UI.Console.csproj", "{38998789-AFD7-5934-9C19-65137424DC1A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DummyConsoleApp", "DummyConsoleApp\DummyConsoleApp.csproj", "{D11796BF-D6A3-4EDD-B728-C98D55A934DC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -74,6 +76,10 @@ Global
 		{38998789-AFD7-5934-9C19-65137424DC1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{38998789-AFD7-5934-9C19-65137424DC1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{38998789-AFD7-5934-9C19-65137424DC1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D11796BF-D6A3-4EDD-B728-C98D55A934DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D11796BF-D6A3-4EDD-B728-C98D55A934DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D11796BF-D6A3-4EDD-B728-C98D55A934DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D11796BF-D6A3-4EDD-B728-C98D55A934DC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
