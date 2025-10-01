@@ -126,3 +126,25 @@ Opdatering 29-09-2025:
   Spørgsmålet er nu, hvordan faen jeg bevæger mig videre.. Jeg har nok i hvert fald gavn af at
   tage de der C2IEDM-ting ud, og muligvis bør jeg også tage personer ud. Et andet spor kunne være
   at lave Persistence.Dummy ud, så den ikke dealer i smurfs, men måske dummies...
+
+
+
+
+  // //<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.9" />
+
+// using Microsoft.Extensions.DependencyInjection;
+// using MediatR;
+
+// namespace PR.Web.Application.Core;
+
+// public static class ApplicationServiceCollectionExtensions
+// {
+//     public static IServiceCollection AddApplication(
+//         this IServiceCollection services)
+//     {
+//         services.AddMediatR(assemblies: typeof(Application.Smurfs.List.Handler).Assembly);
+//         services.AddMediatR(assemblies: typeof(Application.People.List.Handler).Assembly);
+        
+//         return services;
+//     }
+// }    
