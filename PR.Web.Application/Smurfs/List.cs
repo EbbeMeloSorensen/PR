@@ -38,13 +38,13 @@ namespace PR.Web.Application.Smurfs
                 using var unitOfWork = _unitOfWorkFactory.GenerateUnitOfWork();
                 var predicates = new List<Expression<Func<Smurf, bool>>>();
 
-                if (!string.IsNullOrEmpty(request.Params.Name))
-                {
-                    var filter = request.Params.Name.ToLower();
+                // if (!string.IsNullOrEmpty(request.Params.Name))
+                // {
+                //     var filter = request.Params.Name.ToLower();
 
-                    predicates.Add(x =>
-                        x.Name.ToLower().Contains(filter));
-                }
+                //     predicates.Add(x =>
+                //         x.Name.ToLower().Contains(filter));
+                // }
 
                 // Det her er nok ikke super optimalt sådan rent båndbreddemæssigt....
                 // Man finder alle de items, der passer med filteret, dvs det kan i praksis 

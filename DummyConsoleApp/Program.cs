@@ -1,8 +1,8 @@
-﻿using MediatR;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
+using MediatR;
 using PR.Persistence;
 using PR.Persistence.EntityFrameworkCore;
 using PR.Web.Application.Interfaces;
@@ -21,7 +21,7 @@ namespace DummyConsoleApp
                 {
                     // Load connection string from appsettings.json or environment
                     var connectionString = context.Configuration.GetConnectionString("DefaultConnection");
-                    connectionString = "Data source=babuska.db";
+                    connectionString = "Data source=babuska2.db";
 
                     services.AddAppDataPersistence<PRDbContextBase>(options =>
                         options.UseSqlite(connectionString));
@@ -38,41 +38,15 @@ namespace DummyConsoleApp
 
             using var scope = host.Services.CreateScope();
             var db = scope.ServiceProvider.GetRequiredService<PRDbContextBase>();
-            db.Database.Migrate();  // Applies any pending migrations
+            //db.Database.Migrate();  // Applies any pending migrations
+            await db.Database.MigrateAsync();
+            await Seeding.SeedDatabase(db);
 
             var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
 
-            var result = mediator.Send(new List.Query());
+            var result = await mediator.Send(new List.Query{Params = new SmurfParams()});
 
             Console.WriteLine("So far so good");
         }
     }
 }
-
-
-//namespace PR.Web.Application
-//{
-//    public static class ServiceCollectionExtensions
-//    {
-//        public static IServiceCollection AddApplication(
-//            this IServiceCollection services,
-//            string connectionString = null)
-//        {
-//            // Register MediatR
-//            services.AddMediatR(cfg =>
-//                cfg.RegisterServicesFromAssemblyContaining<ServiceCollectionExtensions>());
-
-//            // Register Persistence dependencies
-//            services.AddScoped<IUnitOfWorkFactory, UnitOfWorkFactory>();
-
-//            // If a connection string is provided, register EF Core
-//            if (!string.IsNullOrEmpty(connectionString))
-//            {
-//                services.AddDbContextFactory<PRDbContextBase>(options =>
-//                    options.UseSqlite(connectionString));
-//            }
-
-//            return services;
-//        }
-//    }
-//}
