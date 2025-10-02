@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using PR.Web.Application.Interfaces;
 using PR.Web.Application.Core;
 
-namespace PR.Web.Infrastructure;
+namespace PR.Web.Infrastructure.Pagination;
 
 public class PagingHandler<T> : IPagingHandler<T>
 {

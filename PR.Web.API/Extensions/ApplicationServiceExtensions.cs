@@ -12,7 +12,7 @@ using PR.Persistence.EntityFrameworkCore;
 //using PR.Persistence.EntityFrameworkCore.Sqlite;
 using Persistence.Dummy;
 using PR.Web.Application.Smurfs;
-using PR.Web.Infrastructure;
+using PR.Web.Infrastructure.Pagination;
 
 namespace PR.Web.API.Extensions;
 

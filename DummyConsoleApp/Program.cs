@@ -1,11 +1,14 @@
 ﻿using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using PR.Web.Application.Core;
-using PR.Web.Application.Smurfs;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
 using PR.Persistence;
 using PR.Persistence.EntityFrameworkCore;
-using Persistence.Dummy;
+using PR.Web.Application.Interfaces;
+using PR.Web.Application.Core;
+using PR.Web.Application.Smurfs;
+using PR.Web.Infrastructure.Pagination;
 
 namespace DummyConsoleApp
 {
@@ -13,65 +16,35 @@ namespace DummyConsoleApp
     {
         static async Task Main(string[] args)
         {
-            // 1. Setup DI container
-            var services = new ServiceCollection();
+            var host = Host.CreateDefaultBuilder(args)
+                .ConfigureServices((context, services) =>
+                {
+                    // Load connection string from appsettings.json or environment
+                    var connectionString = context.Configuration.GetConnectionString("DefaultConnection");
+                    connectionString = "Data source=babuska.db";
 
-            // Add logging (minimal consolecls logger)
-            services.AddLogging(cfg => cfg.AddConsole());
+                    services.AddAppDataPersistence<PRDbContextBase>(options =>
+                        options.UseSqlite(connectionString));
 
-            // services.AddAppDataPersistence<PRDbContextBase>(options =>
-            //     options.UseSqlite(config.GetConnectionString("DefaultConnection")));
+                    services.AddAutoMapper(assemblies: typeof(MappingProfiles).Assembly);
+                    services.AddApplication();   // registers MediatR and handlers
+                    services.AddScoped<IUnitOfWorkFactory, UnitOfWorkFactory>();
+                    services.AddScoped<IPagingHandler<SmurfDto>, PagingHandler<SmurfDto>>();
+ 
+                    services.AddMediatR(cfg =>
+                        cfg.RegisterServicesFromAssemblyContaining<List.Query>());
+                })
+                .Build();
 
-            // register Application (your extension method)
-            services.AddApplication();
+            using var scope = host.Services.CreateScope();
+            var db = scope.ServiceProvider.GetRequiredService<PRDbContextBase>();
+            db.Database.Migrate();  // Applies any pending migrations
 
-            // register MediatR (scan Application assembly)
-            services.AddMediatR(cfg =>
-               cfg.RegisterServicesFromAssemblyContaining<List.Query>());
+            var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
 
-            services.AddAutoMapper(assemblies: typeof(MappingProfiles).Assembly);
-            services.AddScoped<IUnitOfWorkFactory, UnitOfWorkFactory>();
-
-            var provider = services.BuildServiceProvider();
-
-            // 2. Resolve IMediator
-            var mediator = provider.GetRequiredService<IMediator>();
-
-            var dummy = await mediator.Send(new List.Query());            
+            var result = mediator.Send(new List.Query());
 
             Console.WriteLine("So far so good");
-
-            //// register Application (your extension method)
-            //services.AddApplication();
-
-            //// register MediatR (scan Application assembly)
-            //services.AddMediatR(cfg =>
-            //    cfg.RegisterServicesFromAssemblyContaining<Create.Command>());
-
-            //var provider = services.BuildServiceProvider();
-
-            //// 2. Resolve IMediator
-            //var mediator = provider.GetRequiredService<IMediator>();
-
-            //// 3. Use commands/queries like the API does
-            //Console.WriteLine("Creating a person...");
-            //var result = await mediator.Send(new Create.Command
-            //{
-            //    FirstName = "Ada",
-            //    LastName = "Lovelace"
-            //});
-
-            //Console.WriteLine(result.IsSuccess
-            //    ? "✅ Person created"
-            //    : $"❌ Failed: {result.Error}");
-
-            //Console.WriteLine("Listing all people...");
-            //var list = await mediator.Send(new List.Query { PageNumber = 1, PageSize = 10 });
-
-            //foreach (var person in list.Value.Items)
-            //{
-            //    Console.WriteLine($"- {person.FirstName} {person.LastName}");
-            //}
         }
     }
 }
