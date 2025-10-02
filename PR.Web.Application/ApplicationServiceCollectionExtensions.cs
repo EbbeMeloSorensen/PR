@@ -8,8 +8,11 @@ public static class ApplicationServiceCollectionExtensions
     public static IServiceCollection AddApplication(
         this IServiceCollection services)
     {
-        services.AddMediatR(assemblies: typeof(Application.Smurfs.List.Handler).Assembly);
-        services.AddMediatR(assemblies: typeof(Application.People.List.Handler).Assembly);
+        services.AddMediatR(cfg => 
+            cfg.RegisterServicesFromAssembly(typeof(People.List.Handler).Assembly));
+
+        services.AddMediatR(cfg => 
+            cfg.RegisterServicesFromAssembly(typeof(Smurfs.List.Handler).Assembly));
         
         return services;
     }

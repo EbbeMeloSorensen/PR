@@ -1,8 +1,11 @@
 ﻿using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using PR.Web.Application.Core;
+using PR.Web.Application.Smurfs;
+using PR.Persistence;
+using PR.Persistence.EntityFrameworkCore;
+using Persistence.Dummy;
 
 namespace DummyConsoleApp
 {
@@ -10,10 +13,33 @@ namespace DummyConsoleApp
     {
         static async Task Main(string[] args)
         {
-            Console.WriteLine("Hej");
-
             // 1. Setup DI container
             var services = new ServiceCollection();
+
+            // Add logging (minimal consolecls logger)
+            services.AddLogging(cfg => cfg.AddConsole());
+
+            // services.AddAppDataPersistence<PRDbContextBase>(options =>
+            //     options.UseSqlite(config.GetConnectionString("DefaultConnection")));
+
+            // register Application (your extension method)
+            services.AddApplication();
+
+            // register MediatR (scan Application assembly)
+            services.AddMediatR(cfg =>
+               cfg.RegisterServicesFromAssemblyContaining<List.Query>());
+
+            services.AddAutoMapper(assemblies: typeof(MappingProfiles).Assembly);
+            services.AddScoped<IUnitOfWorkFactory, UnitOfWorkFactory>();
+
+            var provider = services.BuildServiceProvider();
+
+            // 2. Resolve IMediator
+            var mediator = provider.GetRequiredService<IMediator>();
+
+            var dummy = await mediator.Send(new List.Query());            
+
+            Console.WriteLine("So far so good");
 
             //// register Application (your extension method)
             //services.AddApplication();
