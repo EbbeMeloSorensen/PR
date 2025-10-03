@@ -38,7 +38,6 @@ namespace DummyConsoleApp
 
             using var scope = host.Services.CreateScope();
             var db = scope.ServiceProvider.GetRequiredService<PRDbContextBase>();
-            //db.Database.Migrate();  // Applies any pending migrations
             await db.Database.MigrateAsync();
             await Seeding.SeedDatabase(db);
 
@@ -46,7 +45,13 @@ namespace DummyConsoleApp
 
             var result = await mediator.Send(new List.Query{Params = new SmurfParams()});
 
-            Console.WriteLine("So far so good");
+            Console.WriteLine($"\nSmurfs:");
+            foreach (var smurf in result.Value)
+            {
+                Console.WriteLine($" {smurf.Name}");
+            }
+
+            Console.WriteLine("\nDone");
         }
     }
 }
