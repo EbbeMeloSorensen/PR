@@ -1,11 +1,17 @@
-﻿using System.Configuration;
-using StructureMap;
+﻿using MediatR;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
 using CommandLine;
 using Craft.Utils;
-using PR.Domain.Entities.PR;
-using PR.Persistence;
-using PR.Persistence.Versioned;
 using PR.UI.Console.Verbs;
+using PR.Persistence;
+using PR.Persistence.EntityFrameworkCore;
+using PR.Web.Application.Interfaces;
+using PR.Web.Application.Core;
+using PR.Web.Application.Smurfs;
+using PR.Web.Infrastructure.Pagination;
 
 namespace PR.UI.Console
 {
@@ -14,51 +20,58 @@ namespace PR.UI.Console
         public static async Task CreatePerson(
             Create options)
         {
-        //    System.Console.Write("Creating Person...\nProgress: ");
+            //    System.Console.Write("Creating Person...\nProgress: ");
 
-        //    options.StartTime.TryParsingAsDateTime(out var startTime);
-        //    options.EndTime.TryParsingAsDateTime(out var endTime);
+            //    options.StartTime.TryParsingAsDateTime(out var startTime);
+            //    options.EndTime.TryParsingAsDateTime(out var endTime);
 
-        //    var person = new Person()
-        //    {
-        //        FirstName = options.FirstName,
-        //        Start = startTime ?? DateTime.UtcNow.Date,
-        //        End = endTime ?? new DateTime(9999, 12, 31, 23, 59, 59, DateTimeKind.Utc)
-        //    };
+            //    var person = new Person()
+            //    {
+            //        FirstName = options.FirstName,
+            //        Start = startTime ?? DateTime.UtcNow.Date,
+            //        End = endTime ?? new DateTime(9999, 12, 31, 23, 59, 59, DateTimeKind.Utc)
+            //    };
 
-        //    var application = GetApplication();
-        //    var businessRuleViolations = application.CreateNewPerson_ValidateInput(person);
-            
-        //    if (businessRuleViolations.Any())
-        //    {
-        //        System.Console.WriteLine("\nErrors:");
+            //    var application = GetApplication();
+            //    var businessRuleViolations = application.CreateNewPerson_ValidateInput(person);
 
-        //        foreach (var kvp in businessRuleViolations)
-        //        {
-        //            System.Console.WriteLine($"  {kvp.Value}");
-        //        }
+            //    if (businessRuleViolations.Any())
+            //    {
+            //        System.Console.WriteLine("\nErrors:");
 
-        //        return;
-        //    }
+            //        foreach (var kvp in businessRuleViolations)
+            //        {
+            //            System.Console.WriteLine($"  {kvp.Value}");
+            //        }
 
-        //    await application.CreateNewPerson(person, (progress, nameOfSubtask) =>
-        //    {
-        //        System.Console.SetCursorPosition(10, System.Console.CursorTop);
-        //        System.Console.Write($"{progress:F2} %");
-        //        return false;
-        //    });
+            //        return;
+            //    }
 
-        //    System.Console.WriteLine("\nDone");
+            //    await application.CreateNewPerson(person, (progress, nameOfSubtask) =>
+            //    {
+            //        System.Console.SetCursorPosition(10, System.Console.CursorTop);
+            //        System.Console.Write($"{progress:F2} %");
+            //        return false;
+            //    });
+
+            //    System.Console.WriteLine("\nDone");
         }
 
         public static async Task ListPeople(
-            List options)
+            Verbs.List options)
         {
             options.HistoricalTime.TryParsingAsDateTime(out var historicalTime);
             options.DatabaseTime.TryParsingAsDateTime(out var databaseTime);
 
             try
             {
+                var mediator = await GetMediator();
+
+                var result = await mediator.Send(new Web.Application.Smurfs.List.Query { Params = new SmurfParams() });
+
+                System.Console.WriteLine("Bamse");
+
+                // Old
                 //await GetApplication().ListPeople(
                 //    historicalTime,
                 //    databaseTime,
@@ -145,44 +158,44 @@ namespace PR.UI.Console
         public static async Task UpdatePerson(
             Update options)
         {
-        //    System.Console.Write("Updating Person...\nProgress: ");
+            //    System.Console.Write("Updating Person...\nProgress: ");
 
-        //    var person = new Person()
-        //    {
-        //        ID = new Guid(options.ID),
-        //        FirstName = options.FirstName
-        //    };
+            //    var person = new Person()
+            //    {
+            //        ID = new Guid(options.ID),
+            //        FirstName = options.FirstName
+            //    };
 
-        //    var application = GetApplication();
-        //    var businessRuleViolations = application.UpdatePerson_ValidateInput(person);
+            //    var application = GetApplication();
+            //    var businessRuleViolations = application.UpdatePerson_ValidateInput(person);
 
-        //    if (businessRuleViolations.Any())
-        //    {
-        //        System.Console.WriteLine("\nErrors:");
+            //    if (businessRuleViolations.Any())
+            //    {
+            //        System.Console.WriteLine("\nErrors:");
 
-        //        foreach (var kvp in businessRuleViolations)
-        //        {
-        //            System.Console.WriteLine($"  {kvp.Value}");
-        //        }
+            //        foreach (var kvp in businessRuleViolations)
+            //        {
+            //            System.Console.WriteLine($"  {kvp.Value}");
+            //        }
 
-        //        return;
-        //    }
+            //        return;
+            //    }
 
-        //    try
-        //    {
-        //        await application.UpdatePerson(person, (progress, nameOfSubtask) =>
-        //        {
-        //            System.Console.SetCursorPosition(10, System.Console.CursorTop);
-        //            System.Console.Write($"{progress:F2} %");
-        //            return false;
-        //        });
+            //    try
+            //    {
+            //        await application.UpdatePerson(person, (progress, nameOfSubtask) =>
+            //        {
+            //            System.Console.SetCursorPosition(10, System.Console.CursorTop);
+            //            System.Console.Write($"{progress:F2} %");
+            //            return false;
+            //        });
 
-        //        System.Console.WriteLine("\nDone");
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        System.Console.WriteLine($"\nError updating person ({e.Message})");
-        //    }
+            //        System.Console.WriteLine("\nDone");
+            //    }
+            //    catch (Exception e)
+            //    {
+            //        System.Console.WriteLine($"\nError updating person ({e.Message})");
+            //    }
         }
 
         public static async Task DeletePerson(
@@ -231,17 +244,17 @@ namespace PR.UI.Console
             await Parser.Default.ParseArguments<
                     Create,
                     Count,
-                    List,
+                    Verbs.List,
                     Details,
                     Export,
                     Import,
-                    Update, 
+                    Update,
                     Delete,
                     Breakfast>(args)
                 .MapResult(
                     (Create options) => CreatePerson(options),
                     (Count options) => CountPeople(options),
-                    (List options) => ListPeople(options),
+                    (Verbs.List options) => ListPeople(options),
                     (Details options) => GetPersonDetails(options),
                     (Export options) => ExportPeople(options),
                     (Import options) => ImportPeople(options),
@@ -249,6 +262,38 @@ namespace PR.UI.Console
                     (Delete options) => DeletePerson(options),
                     (Breakfast options) => MakeBreakfast(options),
                     errs => Task.FromResult(0));
+        }
+
+        private static async Task<IMediator> GetMediator()
+        {
+            var host = Host.CreateDefaultBuilder()
+                .ConfigureServices((context, services) =>
+                {
+                    // Load connection string from appsettings.json or environment
+                    var connectionString = context.Configuration.GetConnectionString("DefaultConnection");
+                    connectionString = "Data source=babuska2.db";
+
+                    services.AddAppDataPersistence<PRDbContextBase>(options =>
+                        options.UseSqlite(connectionString));
+
+                    services.AddAutoMapper(assemblies: typeof(MappingProfiles).Assembly);
+                    services.AddApplication();   // registers MediatR and handlers
+                    services.AddScoped<IUnitOfWorkFactory, UnitOfWorkFactory>();
+                    services.AddScoped<IPagingHandler<SmurfDto>, PagingHandler<SmurfDto>>();
+
+                    services.AddMediatR(cfg =>
+                        cfg.RegisterServicesFromAssemblyContaining<Web.Application.Smurfs.List.Query>());
+                })
+                .Build();
+
+            using IServiceScope scope = host.Services.CreateScope();
+            var db = scope.ServiceProvider.GetRequiredService<PRDbContextBase>();
+            await db.Database.MigrateAsync();
+            await Seeding.SeedDatabase(db);
+
+            var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+            //var result = await mediator.Send(new Web.Application.Smurfs.List.Query { Params = new SmurfParams() });
+            return mediator;
         }
 
         // Helpers

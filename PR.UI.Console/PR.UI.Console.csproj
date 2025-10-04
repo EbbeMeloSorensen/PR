@@ -8,13 +8,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.9" />
     <PackageReference Include="CommandLineParser" Version="2.9.1" />
     <PackageReference Include="Craft.Logging.Log4Net" Version="1.0.2" />
     <PackageReference Include="StructureMap" Version="4.7.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.9" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PR.Web.Application\PR.Web.Application.csproj" />
+    <ProjectReference Include="..\PR.Web.Infrastructure\PR.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\PR.Persistence.Versioned\PR.Persistence.Versioned.csproj" />
+    <ProjectReference Include="..\PR.Persistence.EntityFrameworkCore\PR.Persistence.EntityFrameworkCore.csproj" />
   </ItemGroup>
 
   <ItemGroup>
