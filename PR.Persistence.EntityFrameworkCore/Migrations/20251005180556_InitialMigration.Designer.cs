@@ -11,7 +11,7 @@ using PR.Persistence.EntityFrameworkCore;
 namespace PR.Persistence.EntityFrameworkCore.Migrations
 {
     [DbContext(typeof(PRDbContextBase))]
-    [Migration("20250930114305_InitialMigration")]
+    [Migration("20251005180556_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />

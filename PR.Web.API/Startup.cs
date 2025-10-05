@@ -28,7 +28,7 @@ public class Startup
             {
                 config.RegisterValidatorsFromAssemblyContaining<Create>();
             });
-        services.AddApplicationServices(_config, false);
+        services.AddApplicationServices(_config, true);
         services.AddIdentityServices(_config);
     }
 

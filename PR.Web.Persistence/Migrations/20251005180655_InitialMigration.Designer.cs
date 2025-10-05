@@ -11,7 +11,7 @@ using PR.Web.Persistence;
 namespace PR.Web.Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250929072039_InitialMigration")]
+    [Migration("20251005180655_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />

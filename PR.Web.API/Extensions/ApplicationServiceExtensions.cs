@@ -66,22 +66,22 @@ public static class ApplicationServiceExtensions
 
         services.AddIdentityPersistence<DataContext>(options => 
         {
-            options.UseSqlite(connectionString);
-            //options.UseNpgsql(connectionString);
+            //options.UseSqlite(connectionString);
+            options.UseNpgsql(connectionString);
             //options.UseSqlServer(connectionString);
         });
 
         services.AddDummyPersistence<DataContext2>(options => 
         {
-            options.UseSqlite(connectionString);
-            //options.UseNpgsql(connectionString);
+            //options.UseSqlite(connectionString);
+            options.UseNpgsql(connectionString);
             //options.UseSqlServer(connectionString);
         });
 
         services.AddAppDataPersistence<PRDbContextBase>(options =>
         {
-            options.UseSqlite(connectionString);
-            //options.UseNpgsql(connectionString);
+            //options.UseSqlite(connectionString);
+            options.UseNpgsql(connectionString);
             //options.UseSqlServer(connectionString);
         });
 

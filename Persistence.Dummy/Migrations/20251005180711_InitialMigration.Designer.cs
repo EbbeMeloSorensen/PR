@@ -11,7 +11,7 @@ using Persistence.Dummy;
 namespace Persistence.Dummy.Migrations
 {
     [DbContext(typeof(DataContext2))]
-    [Migration("20250929134417_InitialMigration")]
+    [Migration("20251005180711_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
