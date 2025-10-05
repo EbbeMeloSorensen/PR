@@ -3,6 +3,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using PR.Persistence;
 using PR.Persistence.EntityFrameworkCore;
 using PR.Web.Application.Interfaces;
@@ -18,6 +19,15 @@ namespace DummyConsoleApp
         {
             //var host = Host.CreateDefaultBuilder(args)
             var host = Host.CreateDefaultBuilder()
+                .ConfigureLogging(logging =>
+                {
+                    // Turn off logging entirely
+                    //logging.ClearProviders();
+
+                    // Filter EF Core logs
+                    logging.AddFilter("Microsoft.EntityFrameworkCore.Database.Command", LogLevel.None);
+                    logging.AddFilter("Microsoft.EntityFrameworkCore.Migrations", LogLevel.None);
+                })
                 .ConfigureServices((context, services) =>
                 {
                     // Load connection string from appsettings.json or environment
@@ -84,11 +94,14 @@ namespace DummyConsoleApp
         }
 
         static async Task Main(string[] args)
-            {
-                //await Method1(args);
-                await Method2(args);
+        {
+            // Method1 anvender en host, et scope og laver databasen, hvis den ikke er der
+            await Method1(args);
 
-                Console.WriteLine("\nDone");
-            }
+            // Method 2 virker kun, hvis databasen er lavet
+            //await Method2(args);
+
+            Console.WriteLine("\nDone");
+        }
     }
 }
