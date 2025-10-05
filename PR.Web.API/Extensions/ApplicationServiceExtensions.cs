@@ -1,18 +1,17 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
+using Persistence.Dummy;
+using PR.Persistence;
+using PR.Persistence.EntityFrameworkCore;
 using PR.Web.Application.Core;
 using PR.Web.Application.Interfaces;
 using PR.Web.Application.People;
-using PR.Web.Infrastructure.Security;
-using PR.Web.Persistence;
-using PR.Persistence;
-using PR.Persistence.EntityFrameworkCore;
-//using PR.Persistence.EntityFrameworkCore.PostgreSQL;
-//using PR.Persistence.EntityFrameworkCore.Sqlite;
-using Persistence.Dummy;
 using PR.Web.Application.Smurfs;
 using PR.Web.Infrastructure.Pagination;
+using PR.Web.Infrastructure.Security;
+using PR.Web.Persistence;
 
 namespace PR.Web.API.Extensions;
 
@@ -20,72 +19,26 @@ public static class ApplicationServiceExtensions
 {
     public static IServiceCollection AddApplicationServices(
         this IServiceCollection services,
-        IConfiguration config)
+        IConfiguration config,
+        bool deployingToHeroku)
     {
         services.AddSwaggerGen(c =>
         {
             c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPIv5", Version = "v1" });
         });
 
-        // This section is for running locally
-        // services.AddDbContext<DataContext>(opt => 
-        // {
-        //     opt.UseSqlite(config.GetConnectionString("DefaultConnection"));
-        //     //opt.UseNpgsql(config.GetConnectionString("DefaultConnection"));
-        //     //opt.UseSqlServer(config.GetConnectionString("DefaultConnection"));
-        // });
+        var connectionString = string.Empty;
 
-        services.AddIdentityPersistence<DataContext>(opt => 
-        {
-            opt.UseSqlite(config.GetConnectionString("DefaultConnection"));
-            //opt.UseNpgsql(config.GetConnectionString("DefaultConnection"));
-            //opt.UseSqlServer(config.GetConnectionString("DefaultConnection"));
-        });
-
-        // services.AddDbContext<DataContext2>(opt => 
-        // {
-        //     opt.UseSqlite(config.GetConnectionString("DefaultConnection"));
-        //     //opt.UseNpgsql(config.GetConnectionString("DefaultConnection"));
-        //     //opt.UseSqlServer(config.GetConnectionString("DefaultConnection"));
-        // });
-
-        services.AddDummyPersistence<DataContext2>(opt => 
-        {
-            opt.UseSqlite(config.GetConnectionString("DefaultConnection"));
-            //opt.UseNpgsql(config.GetConnectionString("DefaultConnection"));
-            //opt.UseSqlServer(config.GetConnectionString("DefaultConnection"));
-        });
-
-        // Bemærk: Man skal ikke gøre dette, hvis man også opererer med AddDbContextFactory,
-        // hvilket vi jo gør for at få vores UnitOfWork til at virke.
-        // Som ChatGPT formulerer det: Use either AddDbContext or AddDbContextFactory for a given DbContext, not both.
-        // services.AddDbContext<PRDbContextBase>(opt => 
-        // {
-        //     opt.UseSqlite(config.GetConnectionString("DefaultConnection"));
-        //     //opt.UseNpgsql(config.GetConnectionString("DefaultConnection"));
-        //     //opt.UseSqlServer(config.GetConnectionString("DefaultConnection"));
-        // });
-
-        // services.AddDbContextFactory<PRDbContextBase>(options =>
-        //     options.UseSqlite(config.GetConnectionString("DefaultConnection")));        
-
-        services.AddAppDataPersistence<PRDbContextBase>(options =>
-            options.UseSqlite(config.GetConnectionString("DefaultConnection")));
-
-        /*
-        // This section is for deploying to Heroku
-        services.AddDbContext<DataContext>(options =>
+        if (deployingToHeroku)
         {
             var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-
-            string connStr;
 
             // Depending on if in development or production, use either Heroku-provided
             // connection string, or development connection string from env var.
             if (env == "Development")
             {
                 // Use connection string from file.
-                connStr = config.GetConnectionString("DefaultConnection");
+                connectionString = config.GetConnectionString("DefaultConnection");
             }
             else
             {
@@ -103,14 +56,37 @@ public static class ApplicationServiceExtensions
                 var pgHost = pgHostPort.Split(":")[0];
                 var pgPort = pgHostPort.Split(":")[1];
 
-                connStr = $"Server={pgHost};Port={pgPort};User Id={pgUser};Password={pgPass};Database={pgDb}; SSL Mode=Require; Trust Server Certificate=true";
+                connectionString = $"Server={pgHost};Port={pgPort};User Id={pgUser};Password={pgPass};Database={pgDb}; SSL Mode=Require; Trust Server Certificate=true";
             }
+        }
+        else
+        {
+            connectionString = config.GetConnectionString("DefaultConnection");
+        }
 
-            // Whether the connection string came from the local development configuration file
-            // or from the environment variable from Heroku, use it to set up your DbContext.
-            options.UseNpgsql(connStr);
+        services.AddIdentityPersistence<DataContext>(options => 
+        {
+            options.UseSqlite(connectionString);
+            //options.UseNpgsql(connectionString);
+            //options.UseSqlServer(connectionString);
         });
-        */
+
+        services.AddDummyPersistence<DataContext2>(options => 
+        {
+            options.UseSqlite(connectionString);
+            //options.UseNpgsql(connectionString);
+            //options.UseSqlServer(connectionString);
+        });
+
+        services.AddAppDataPersistence<PRDbContextBase>(options =>
+        {
+            options.UseSqlite(connectionString);
+            //options.UseNpgsql(connectionString);
+            //options.UseSqlServer(connectionString);
+        });
+
+
+
 
         services.AddCors(opt =>
         {
