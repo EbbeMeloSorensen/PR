@@ -1,8 +1,9 @@
-﻿using MediatR;
-using Microsoft.Extensions.Hosting;
+﻿using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
+using MediatR;
 using CommandLine;
 using Craft.Utils;
 using PR.UI.Console.Verbs;
@@ -17,6 +18,8 @@ namespace PR.UI.Console
 {
     class Program
     {
+        private static IHost? _host = null;
+
         public static async Task CreatePerson(
             Create options)
         {
@@ -65,29 +68,24 @@ namespace PR.UI.Console
 
             try
             {
-                var mediator = await GetMediator();
+                using var scope = (await GetHost()).Services.CreateScope();
+                var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
 
                 var result = await mediator.Send(new Web.Application.Smurfs.List.Query { Params = new SmurfParams() });
 
-                System.Console.WriteLine("Bamse");
-
-                // Old
-                //await GetApplication().ListPeople(
-                //    historicalTime,
-                //    databaseTime,
-                //    options.ExcludeCurrentObjects,
-                //    options.IncludeHistoricalObjects,
-                //    options.WriteToFile,
-                //    (progress, nameOfSubtask) =>
-                //    {
-                //        System.Console.SetCursorPosition(10, System.Console.CursorTop);
-                //        System.Console.Write($"{progress:F2} %");
-                //        return false;
-                //    });
+                System.Console.WriteLine($"\nSmurfs:");
+                foreach (var smurf in result.Value)
+                {
+                    System.Console.WriteLine($" {smurf.Name}");
+                }
             }
             catch (HttpRequestException exception)
             {
-                System.Console.Write($"\nError occured: \"{exception.Message}\"\n");
+                System.Console.Write($"\nHttpRequestException thrown: \"{exception.Message}\"\n");
+            }
+            catch (Exception exception)
+            {
+                System.Console.Write($"\nException thrown: \"{exception.Message}\"\n");
             }
         }
 
@@ -264,80 +262,47 @@ namespace PR.UI.Console
                     errs => Task.FromResult(0));
         }
 
-        private static async Task<IMediator> GetMediator()
+        private static async Task<IHost> GetHost()
         {
-            var host = Host.CreateDefaultBuilder()
-                .ConfigureServices((context, services) =>
-                {
-                    // Load connection string from appsettings.json or environment
-                    var connectionString = context.Configuration.GetConnectionString("DefaultConnection");
-                    connectionString = "Data source=babuska2.db";
+            if (_host == null)
+            {
+                _host = Host.CreateDefaultBuilder()
+                    .ConfigureLogging(logging =>
+                    {
+                        // Turn off logging entirely
+                        //logging.ClearProviders();
 
-                    services.AddAppDataPersistence<PRDbContextBase>(options =>
-                        options.UseSqlite(connectionString));
+                        // Filter EF Core logs
+                        logging.AddFilter("Microsoft.EntityFrameworkCore.Database.Command", LogLevel.None);
+                        logging.AddFilter("Microsoft.EntityFrameworkCore.Migrations", LogLevel.None);
+                    })
+                    .ConfigureServices((context, services) =>
+                    {
+                        // Load connection string from appsettings.json or environment
+                        var connectionString = context.Configuration.GetConnectionString("DefaultConnection");
+                        connectionString = "Data source=babuska3.db";
 
-                    services.AddAutoMapper(assemblies: typeof(MappingProfiles).Assembly);
-                    services.AddApplication();   // registers MediatR and handlers
-                    services.AddScoped<IUnitOfWorkFactory, UnitOfWorkFactory>();
-                    services.AddScoped<IPagingHandler<SmurfDto>, PagingHandler<SmurfDto>>();
+                        services.AddAppDataPersistence<PRDbContextBase>(options =>
+                            options.UseSqlite(connectionString));
 
-                    services.AddMediatR(cfg =>
-                        cfg.RegisterServicesFromAssemblyContaining<Web.Application.Smurfs.List.Query>());
-                })
-                .Build();
+                        services.AddAutoMapper(assemblies: typeof(MappingProfiles).Assembly);
+                        services.AddApplication(); // registers MediatR and handlers
+                        services.AddScoped<IUnitOfWorkFactory, UnitOfWorkFactory>();
+                        services.AddScoped<IPagingHandler<SmurfDto>, PagingHandler<SmurfDto>>();
 
-            using IServiceScope scope = host.Services.CreateScope();
-            var db = scope.ServiceProvider.GetRequiredService<PRDbContextBase>();
-            await db.Database.MigrateAsync();
-            await Seeding.SeedDatabase(db);
+                        services.AddMediatR(cfg =>
+                            cfg.RegisterServicesFromAssemblyContaining<Web.Application.Smurfs.List.Query>());
+                    })
+                    .Build();
 
-            var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
-            //var result = await mediator.Send(new Web.Application.Smurfs.List.Query { Params = new SmurfParams() });
-            return mediator;
+                // Run migrations once when the host is created
+                using var scope = _host.Services.CreateScope();
+                var db = scope.ServiceProvider.GetRequiredService<PRDbContextBase>();
+                await db.Database.MigrateAsync();
+                await Seeding.SeedDatabase(db);
+            }
+
+            return _host;
         }
-
-        // Helpers
-        //private static Application.Application GetApplication()
-        //{
-        //    // Denne blok bør du nok lave generel, så det er den samme, der bruges i WPF-applikationen
-
-        //    var container = Container.For<InstanceScanner>();
-        //    var application = container.GetInstance<Application.Application>();
-
-        //    var configFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-        //    var settings = configFile.AppSettings.Settings;
-        //    var versioning = settings["Versioning"]?.Value;
-        //    var reseeding = settings["Reseeding"]?.Value;
-
-        //    if (versioning == "enabled")
-        //    {
-        //        // Den skal ikke wrappes, hvis det er en af dem, der repræsenterer et API
-        //        if (application.UnitOfWorkFactory is not IUnitOfWorkFactoryVersioned)
-        //        {
-        //            // Wrap the UnitOfWorkFactory, so we get versioning and history
-        //            application.UnitOfWorkFactory =
-        //                new UnitOfWorkFactoryFacade(application.UnitOfWorkFactory);
-        //        }
-        //    }
-        //    else if (versioning != "disabled")
-        //    {
-        //        throw new ConfigurationException(
-        //            "Invalid value for versioning in config file (must be \"enabled\" or \"disabled\")");
-        //    }
-
-        //    application.UnitOfWorkFactory.Initialize(versioning == "enabled");
-
-        //    if (reseeding == "enabled")
-        //    {
-        //        application.UnitOfWorkFactory.Reseed();
-        //    }
-        //    else if (reseeding != "disabled")
-        //    {
-        //        throw new ConfigurationException(
-        //            "Invalid value for reseeding in config file (must be \"enabled\" or \"disabled\")");
-        //    }
-
-        //    return application;
-        //}
     }
 }
