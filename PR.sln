@@ -30,6 +30,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PR.UI.Console", "PR.UI.Cons
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DummyConsoleApp", "DummyConsoleApp\DummyConsoleApp.csproj", "{D11796BF-D6A3-4EDD-B728-C98D55A934DC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DummyWpfApp", "DummyWpfApp\DummyWpfApp.csproj", "{2FF35D98-B951-4C4C-812B-30266BB57E3C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -80,6 +82,10 @@ Global
 		{D11796BF-D6A3-4EDD-B728-C98D55A934DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D11796BF-D6A3-4EDD-B728-C98D55A934DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D11796BF-D6A3-4EDD-B728-C98D55A934DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FF35D98-B951-4C4C-812B-30266BB57E3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FF35D98-B951-4C4C-812B-30266BB57E3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FF35D98-B951-4C4C-812B-30266BB57E3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FF35D98-B951-4C4C-812B-30266BB57E3C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
