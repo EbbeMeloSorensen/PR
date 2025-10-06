@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PR.Persistence.EntityFrameworkCore;
 
 #nullable disable
@@ -15,13 +16,17 @@ namespace PR.Persistence.EntityFrameworkCore.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "9.0.5");
+            modelBuilder
+                .HasAnnotation("ProductVersion", "9.0.5")
+                .HasAnnotation("Relational:MaxIdentifierLength", 63);
+
+            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("PR.Domain.Entities.C2IEDM.Geometry.CoordinateSystem", b =>
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.HasKey("ID");
 
@@ -33,16 +38,16 @@ namespace PR.Persistence.EntityFrameworkCore.Migrations
             modelBuilder.Entity("PR.Domain.Entities.C2IEDM.Geometry.LinePoint", b =>
                 {
                     b.Property<Guid>("LineID")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<int>("Index")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer");
 
                     b.Property<Guid>("PointId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<int>("SequenceQuantity")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer");
 
                     b.HasKey("LineID", "Index");
 
@@ -55,7 +60,7 @@ namespace PR.Persistence.EntityFrameworkCore.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -68,10 +73,10 @@ namespace PR.Persistence.EntityFrameworkCore.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<double>("Dimension")
-                        .HasColumnType("REAL");
+                        .HasColumnType("double precision");
 
                     b.HasKey("Id");
 
@@ -82,14 +87,14 @@ namespace PR.Persistence.EntityFrameworkCore.Migrations
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("AlternativeIdentificationText")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.HasKey("ID");
 
@@ -102,59 +107,59 @@ namespace PR.Persistence.EntityFrameworkCore.Migrations
                 {
                     b.Property<Guid>("ArchiveID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Address")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<DateTime?>("Birthday")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Category")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<string>("City")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("Created")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<bool?>("Dead")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Description")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("End")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<Guid>("ID")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<double?>("Latitude")
-                        .HasColumnType("REAL");
+                        .HasColumnType("double precision");
 
                     b.Property<double?>("Longitude")
-                        .HasColumnType("REAL");
+                        .HasColumnType("double precision");
 
                     b.Property<string>("Nickname")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("Start")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("Superseded")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Surname")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<string>("ZipCode")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.HasKey("ArchiveID");
 
@@ -165,38 +170,38 @@ namespace PR.Persistence.EntityFrameworkCore.Migrations
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("ArchiveID")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("Created")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("End")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid>("ObjectPersonArchiveID")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("ObjectPersonID")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("Start")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid>("SubjectPersonArchiveID")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("SubjectPersonID")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("Superseded")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Text")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.HasKey("ID");
 
@@ -211,32 +216,32 @@ namespace PR.Persistence.EntityFrameworkCore.Migrations
                 {
                     b.Property<Guid>("ArchiveID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("Created")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("End")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid>("ID")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("PersonArchiveID")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("PersonID")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("Start")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("Superseded")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Text")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.HasKey("ArchiveID");
 
@@ -249,11 +254,11 @@ namespace PR.Persistence.EntityFrameworkCore.Migrations
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.HasKey("ID");
 
@@ -265,13 +270,13 @@ namespace PR.Persistence.EntityFrameworkCore.Migrations
                     b.HasBaseType("PR.Domain.Entities.C2IEDM.Geometry.CoordinateSystem");
 
                     b.Property<Guid>("OriginPointID")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("XVectorPointID")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("YVectorPointID")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.HasIndex("OriginPointID");
 
@@ -287,10 +292,10 @@ namespace PR.Persistence.EntityFrameworkCore.Migrations
                     b.HasBaseType("PR.Domain.Entities.C2IEDM.Geometry.Location");
 
                     b.Property<Guid?>("LowerVerticalDistanceID")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid?>("UpperVerticalDistanceID")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.HasIndex("LowerVerticalDistanceID");
 
@@ -325,7 +330,7 @@ namespace PR.Persistence.EntityFrameworkCore.Migrations
                     b.HasBaseType("PR.Domain.Entities.C2IEDM.ObjectItems.ObjectItem");
 
                     b.Property<string>("NickName")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.ToTable("Organisations");
                 });
@@ -335,10 +340,10 @@ namespace PR.Persistence.EntityFrameworkCore.Migrations
                     b.HasBaseType("PR.Domain.Entities.C2IEDM.Geometry.GeometricVolume");
 
                     b.Property<Guid>("DefiningSurfaceID")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("VertexPointID")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.HasIndex("DefiningSurfaceID");
 
@@ -352,10 +357,10 @@ namespace PR.Persistence.EntityFrameworkCore.Migrations
                     b.HasBaseType("PR.Domain.Entities.C2IEDM.Geometry.GeometricVolume");
 
                     b.Property<Guid>("CentrePointID")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<double>("RadiusDimension")
-                        .HasColumnType("REAL");
+                        .HasColumnType("double precision");
 
                     b.HasIndex("CentrePointID");
 
@@ -367,7 +372,7 @@ namespace PR.Persistence.EntityFrameworkCore.Migrations
                     b.HasBaseType("PR.Domain.Entities.C2IEDM.Geometry.GeometricVolume");
 
                     b.Property<Guid>("DefiningSurfaceID")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.HasIndex("DefiningSurfaceID");
 
@@ -379,13 +384,13 @@ namespace PR.Persistence.EntityFrameworkCore.Migrations
                     b.HasBaseType("PR.Domain.Entities.C2IEDM.Geometry.Point");
 
                     b.Property<double>("LatitudeCoordinate")
-                        .HasColumnType("REAL");
+                        .HasColumnType("double precision");
 
                     b.Property<double>("LongitudeCoordinate")
-                        .HasColumnType("REAL");
+                        .HasColumnType("double precision");
 
                     b.Property<Guid?>("VerticalDistanceId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.HasIndex("VerticalDistanceId");
 
@@ -397,16 +402,16 @@ namespace PR.Persistence.EntityFrameworkCore.Migrations
                     b.HasBaseType("PR.Domain.Entities.C2IEDM.Geometry.Point");
 
                     b.Property<Guid>("CoordinateSystemID")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<double>("XCoordinateDimension")
-                        .HasColumnType("REAL");
+                        .HasColumnType("double precision");
 
                     b.Property<double>("YCoordinateDimension")
-                        .HasColumnType("REAL");
+                        .HasColumnType("double precision");
 
                     b.Property<double>("ZCoordinateDimension")
-                        .HasColumnType("REAL");
+                        .HasColumnType("double precision");
 
                     b.HasIndex("CoordinateSystemID");
 
@@ -418,10 +423,10 @@ namespace PR.Persistence.EntityFrameworkCore.Migrations
                     b.HasBaseType("PR.Domain.Entities.C2IEDM.Geometry.Surface");
 
                     b.Property<Guid>("CenterLineID")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<double>("WidthDimension")
-                        .HasColumnType("REAL");
+                        .HasColumnType("double precision");
 
                     b.HasIndex("CenterLineID");
 
@@ -433,13 +438,13 @@ namespace PR.Persistence.EntityFrameworkCore.Migrations
                     b.HasBaseType("PR.Domain.Entities.C2IEDM.Geometry.Surface");
 
                     b.Property<Guid>("CentrePointID")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("FirstConjugateDiameterPointID")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("SecondConjugateDiameterPointID")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.HasIndex("CentrePointID");
 
@@ -455,19 +460,19 @@ namespace PR.Persistence.EntityFrameworkCore.Migrations
                     b.HasBaseType("PR.Domain.Entities.C2IEDM.Geometry.Surface");
 
                     b.Property<double>("MaximumRangeDimension")
-                        .HasColumnType("REAL");
+                        .HasColumnType("double precision");
 
                     b.Property<double>("MinimumRangeDimension")
-                        .HasColumnType("REAL");
+                        .HasColumnType("double precision");
 
                     b.Property<double>("OrientationAngle")
-                        .HasColumnType("REAL");
+                        .HasColumnType("double precision");
 
                     b.Property<double>("SectorSizeAngle")
-                        .HasColumnType("REAL");
+                        .HasColumnType("double precision");
 
                     b.Property<Guid>("VertexPointID")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.HasIndex("VertexPointID");
 
@@ -479,16 +484,16 @@ namespace PR.Persistence.EntityFrameworkCore.Migrations
                     b.HasBaseType("PR.Domain.Entities.C2IEDM.Geometry.Surface");
 
                     b.Property<Guid>("FirstPointID")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<int>("OrbitAreaAlignmentCode")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer");
 
                     b.Property<Guid>("SecondPointID")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<double>("WidthDimension")
-                        .HasColumnType("REAL");
+                        .HasColumnType("double precision");
 
                     b.HasIndex("FirstPointID");
 
@@ -502,19 +507,19 @@ namespace PR.Persistence.EntityFrameworkCore.Migrations
                     b.HasBaseType("PR.Domain.Entities.C2IEDM.Geometry.Surface");
 
                     b.Property<double>("ArcRadiusDimension")
-                        .HasColumnType("REAL");
+                        .HasColumnType("double precision");
 
                     b.Property<Guid>("BearingOriginPointID")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<double>("BeginBearingAngle")
-                        .HasColumnType("REAL");
+                        .HasColumnType("double precision");
 
                     b.Property<Guid>("DefiningLineID")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<double>("EndBearingAngle")
-                        .HasColumnType("REAL");
+                        .HasColumnType("double precision");
 
                     b.HasIndex("BearingOriginPointID");
 
@@ -528,7 +533,7 @@ namespace PR.Persistence.EntityFrameworkCore.Migrations
                     b.HasBaseType("PR.Domain.Entities.C2IEDM.Geometry.Surface");
 
                     b.Property<Guid>("BoundingLineID")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.HasIndex("BoundingLineID");
 
@@ -540,16 +545,16 @@ namespace PR.Persistence.EntityFrameworkCore.Migrations
                     b.HasBaseType("PR.Domain.Entities.C2IEDM.Geometry.Surface");
 
                     b.Property<Guid>("BeginPointID")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("EndPointID")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<double>("LeftWidthDimension")
-                        .HasColumnType("REAL");
+                        .HasColumnType("double precision");
 
                     b.Property<double>("RightWidthDimension")
-                        .HasColumnType("REAL");
+                        .HasColumnType("double precision");
 
                     b.HasIndex("BeginPointID");
 
@@ -564,7 +569,7 @@ namespace PR.Persistence.EntityFrameworkCore.Migrations
 
                     b.Property<string>("FormalAbbreviatedName")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.ToTable("Units");
                 });
