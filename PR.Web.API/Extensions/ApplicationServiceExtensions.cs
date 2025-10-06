@@ -31,17 +31,24 @@ public static class ApplicationServiceExtensions
 
         if (deployingToHeroku)
         {
+            Console.WriteLine("\nDEPLOYING TO HEROKU!!!\n");
             var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+
+            Console.WriteLine($"\nENVIRONMENT IS: {env}!!!\n");
 
             // Depending on if in development or production, use either Heroku-provided
             // connection string, or development connection string from env var.
             if (env == "Development")
             {
+                Console.WriteLine("\nReading connection string from appsettings.json\n");
+
                 // Use connection string from file.
                 connectionString = config.GetConnectionString("DefaultConnection");
             }
             else
             {
+                Console.WriteLine("\nReading connection string from Heroku config variable: DATABASE_URL\n");
+
                 // Use connection string provided at runtime by Heroku.
                 var connUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
 
@@ -61,8 +68,11 @@ public static class ApplicationServiceExtensions
         }
         else
         {
+            Console.WriteLine("\nDEPLOYING LOCALLY!!!\n");
             connectionString = config.GetConnectionString("DefaultConnection");
         }
+
+        Console.WriteLine($"\nCONNECTION STRING IS: {connectionString}!!!\n");
 
         services.AddIdentityPersistence<DataContext>(options => 
         {
