@@ -14,4 +14,11 @@
     <PackageReference Include="StructureMap" Version="4.7.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Persistence.Dummy\Persistence.Dummy.csproj" />
+    <ProjectReference Include="..\PR.Persistence.EntityFrameworkCore\PR.Persistence.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\PR.Web.Application\PR.Web.Application.csproj" />
+    <ProjectReference Include="..\PR.Web.Infrastructure\PR.Web.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

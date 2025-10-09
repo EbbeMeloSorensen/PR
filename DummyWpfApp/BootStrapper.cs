@@ -6,7 +6,7 @@ namespace DummyWpfApp
     public class BootStrapper
     {
         // From ChatGPT
-        private readonly IServiceProvider _services;
+        //private readonly IServiceProvider _services;
 
         public MainWindowViewModel MainWindowViewModel
         {
@@ -27,16 +27,16 @@ namespace DummyWpfApp
         }
 
         // From ChatGPT
-        public BootStrapper()
-        {
-            //_services = App.AppHost.Services;
-        }
+        //public BootStrapper()
+        //{
+        //    //_services = App.AppHost.Services;
+        //}
 
         // From ChatGPT
-        public void Initialize()
-        {
-            var mainWindow = _services.GetRequiredService<MainWindow>();
-            mainWindow.Show();
-        }
+        //public void Initialize()
+        //{
+        //    var mainWindow = _services.GetRequiredService<MainWindow>();
+        //    mainWindow.Show();
+        //}
     }
 }

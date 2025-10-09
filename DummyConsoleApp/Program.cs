@@ -2,8 +2,8 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
-using MediatR;
 using Microsoft.Extensions.Logging;
+using MediatR;
 using PR.Persistence;
 using PR.Persistence.EntityFrameworkCore;
 using PR.Web.Application.Interfaces;
