@@ -32,6 +32,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DummyConsoleApp", "DummyCon
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DummyWpfApp", "DummyWpfApp\DummyWpfApp.csproj", "{2FF35D98-B951-4C4C-812B-30266BB57E3C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DummyWpfApp2", "DummyWpfApp2\DummyWpfApp2.csproj", "{1780F789-77ED-4096-BA27-BA288CC2DC9B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -86,6 +88,10 @@ Global
 		{2FF35D98-B951-4C4C-812B-30266BB57E3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2FF35D98-B951-4C4C-812B-30266BB57E3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2FF35D98-B951-4C4C-812B-30266BB57E3C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1780F789-77ED-4096-BA27-BA288CC2DC9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1780F789-77ED-4096-BA27-BA288CC2DC9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1780F789-77ED-4096-BA27-BA288CC2DC9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1780F789-77ED-4096-BA27-BA288CC2DC9B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
