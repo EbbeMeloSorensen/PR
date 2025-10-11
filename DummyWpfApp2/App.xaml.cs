@@ -29,7 +29,7 @@ namespace DummyWpfApp2
                 .ConfigureServices((context, services) =>
                 {
                     //var connectionString = "Data source=babuska27.db";
-                    var connectionString = "Server=localhost;Port=5432;User Id=root;Password=root;Database=DB_DummyWpfApp2";
+                    var connectionString = "Server=localhost;Port=5432;User Id=root;Password=root;Database=DB_DummyWpfApp";
 
                     services.AddAppDataPersistence<PRDbContextBase>(options =>
                     {
