@@ -22,6 +22,9 @@ namespace DummyWpfApp2
         {
             base.OnStartup(e);
 
+            var splash = new SplashScreenWindow();
+            splash.Show();
+
             _host = Host.CreateDefaultBuilder()
                 .ConfigureServices((context, services) =>
                 {
@@ -48,15 +51,21 @@ namespace DummyWpfApp2
                 })
                 .Build();
 
-            using var scope = _host.Services.CreateScope();
-            var db = scope.ServiceProvider.GetRequiredService<PRDbContextBase>();
-            //await db.Database.MigrateAsync();
-            //await Seeding.SeedDatabase(db);
-            db.Database.MigrateAsync().GetAwaiter().GetResult();
-            Seeding.SeedDatabase(db).GetAwaiter().GetResult();
+            Task.Run(async () =>
+            {
+                using var scope = _host.Services.CreateScope();
+                var db = scope.ServiceProvider.GetRequiredService<PRDbContextBase>();
+                db.Database.MigrateAsync().GetAwaiter().GetResult();
+                Seeding.SeedDatabase(db).GetAwaiter().GetResult();
 
-            var mainWindow = _host.Services.GetRequiredService<MainWindow>();
-            mainWindow.Show();
+                await Current.Dispatcher.InvokeAsync(() =>
+                {
+                    var scope = _host!.Services.CreateScope();
+                    var mainWindow = scope.ServiceProvider.GetRequiredService<MainWindow>();
+                    splash.Close();
+                    mainWindow.Show();
+                });
+            });
         }
 
         protected override async void OnExit(ExitEventArgs e)
