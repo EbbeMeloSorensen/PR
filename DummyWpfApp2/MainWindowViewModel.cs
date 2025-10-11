@@ -36,7 +36,7 @@ public class MainWindowViewModel : ViewModelBase
 
     private async Task LoadSmurfsAsync()
     {
-        var smurfs = await _mediator.Send(new List.Query());
+        var smurfs = await _mediator.Send(new List.Query { Params = new SmurfParams() });
 
         Smurfs.Clear();
         foreach (var smurfDto in smurfs.Value)

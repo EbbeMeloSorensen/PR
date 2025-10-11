@@ -16,8 +16,12 @@
             <Button Content="{Binding ButtonText}" Command="{Binding LoadSmurfsCommand}"/>
         </StackPanel>
 
-        <ListBox Grid.Row="1">
-
+        <ListBox Grid.Row="1" ItemsSource="{Binding Smurfs}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
         </ListBox>
     </Grid>
 </Window>

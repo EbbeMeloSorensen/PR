@@ -32,10 +32,14 @@ namespace DummyConsoleApp
                 {
                     // Load connection string from appsettings.json or environment
                     var connectionString = context.Configuration.GetConnectionString("DefaultConnection");
-                    connectionString = "Data source=babuska2.db";
+                    //connectionString = "Data source=babuska2.db";
+                    connectionString = "Server=localhost;Port=5432;User Id=root;Password=root;Database=DB_DummyConsoleApp";
 
                     services.AddAppDataPersistence<PRDbContextBase>(options =>
-                        options.UseSqlite(connectionString));
+                    {
+                        //options.UseSqlite(connectionString);
+                        options.UseNpgsql(connectionString);
+                    });
 
                     services.AddAutoMapper(assemblies: typeof(MappingProfiles).Assembly);
                     services.AddApplication();   // registers MediatR and handlers

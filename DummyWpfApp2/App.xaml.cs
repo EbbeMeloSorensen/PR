@@ -25,12 +25,16 @@ namespace DummyWpfApp2
             _host = Host.CreateDefaultBuilder()
                 .ConfigureServices((context, services) =>
                 {
-                    var connectionString = "Data source=babuska27.db";
-                    services.AddAppDataPersistence<PRDbContextBase>(options =>
-                        //options.UseSqlite(connectionString));
-                        options.UseSqlite(connectionString));
+                    //var connectionString = "Data source=babuska27.db";
+                    var connectionString = "Server=localhost;Port=5432;User Id=root;Password=root;Database=DB_DummyWpfApp2";
 
-            services.AddAutoMapper(assemblies: typeof(MappingProfiles).Assembly);
+                    services.AddAppDataPersistence<PRDbContextBase>(options =>
+                    {
+                        //options.UseSqlite(connectionString);
+                        options.UseNpgsql(connectionString);
+                    });
+
+                    services.AddAutoMapper(assemblies: typeof(MappingProfiles).Assembly);
                     services.AddApplication();   // registers MediatR and handlers
                     services.AddScoped<IUnitOfWorkFactory, UnitOfWorkFactory>();
                     services.AddScoped<IPagingHandler<SmurfDto>, PagingHandler<SmurfDto>>();
