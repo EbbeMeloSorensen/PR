@@ -7,6 +7,17 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button Content="{Binding Greeting}"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" FlowDirection="LeftToRight" Orientation="Horizontal">
+            <Button Content="{Binding ButtonText}" Command="{Binding LoadSmurfsCommand}"/>
+        </StackPanel>
+
+        <ListBox Grid.Row="1">
+
+        </ListBox>
     </Grid>
 </Window>
