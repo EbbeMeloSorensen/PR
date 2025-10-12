@@ -11,13 +11,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PR.Persistence.EntityFramew
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PR.Persistence.Versioned", "PR.Persistence.Versioned\PR.Persistence.Versioned.csproj", "{0999D592-FEAF-8F7E-B56F-AA248DF119C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PR.Web.Persistence", "PR.Web.Persistence\PR.Web.Persistence.csproj", "{52704603-8E9B-653A-F9AD-5B5D489A1091}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PR.Persistence.Authentication", "PR.Web.Persistence\PR.Persistence.Authentication.csproj", "{52704603-8E9B-653A-F9AD-5B5D489A1091}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PR.Web.Application", "PR.Web.Application\PR.Web.Application.csproj", "{4F078619-3580-CF66-E095-854FC6F90DB7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PR.Application", "PR.Web.Application\PR.Application.csproj", "{4F078619-3580-CF66-E095-854FC6F90DB7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PR.Web.Infrastructure", "PR.Web.Infrastructure\PR.Web.Infrastructure.csproj", "{DFDAA0B1-6CE4-2D59-4C00-35D7AD78BA5D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PR.Infrastructure", "PR.Web.Infrastructure\PR.Infrastructure.csproj", "{DFDAA0B1-6CE4-2D59-4C00-35D7AD78BA5D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PR.Web.API", "PR.Web.API\PR.Web.API.csproj", "{F6732751-069F-2783-36D7-387E043C640E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PR.API", "PR.Web.API\PR.API.csproj", "{F6732751-069F-2783-36D7-387E043C640E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistence.Dummy", "Persistence.Dummy\Persistence.Dummy.csproj", "{F168FD3C-2DCC-41FB-BD54-E6E52665CAF9}"
 EndProject

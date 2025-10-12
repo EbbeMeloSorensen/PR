@@ -11,8 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PR.Web.Application\PR.Web.Application.csproj" />
-    <ProjectReference Include="..\PR.Web.Persistence\PR.Web.Persistence.csproj" />
+    <ProjectReference Include="..\PR.Web.Application\PR.Application.csproj" />
+    <ProjectReference Include="..\PR.Web.Persistence\PR.Persistence.Authentication.csproj" />
   </ItemGroup>
 
 </Project>

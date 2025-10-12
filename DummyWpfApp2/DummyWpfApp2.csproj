@@ -17,8 +17,8 @@
   <ItemGroup>
     <ProjectReference Include="..\Persistence.Dummy\Persistence.Dummy.csproj" />
     <ProjectReference Include="..\PR.Persistence.EntityFrameworkCore\PR.Persistence.EntityFrameworkCore.csproj" />
-    <ProjectReference Include="..\PR.Web.Application\PR.Web.Application.csproj" />
-    <ProjectReference Include="..\PR.Web.Infrastructure\PR.Web.Infrastructure.csproj" />
+    <ProjectReference Include="..\PR.Web.Application\PR.Application.csproj" />
+    <ProjectReference Include="..\PR.Web.Infrastructure\PR.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
