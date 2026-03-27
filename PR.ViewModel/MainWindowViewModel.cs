@@ -42,7 +42,7 @@ namespace PR.ViewModel
         public PersonAssociationsViewModel PersonAssociationsViewModel { get; private set; }
         public LogViewModel LogViewModel { get; private set; }
 
-        private RelayCommand<object> _createPersonCommand;
+        private AsyncCommand<object> _createPersonCommand;
         private RelayCommand<object> _showOptionsDialogCommand;
         private AsyncCommand _deleteSelectedPeopleCommand;
         private AsyncCommand _exportPeopleCommand;
@@ -55,9 +55,9 @@ namespace PR.ViewModel
             get { return _deleteSelectedPeopleCommand ?? (_deleteSelectedPeopleCommand = new AsyncCommand(DeleteSelectedPeople, CanDeleteSelectedPeople)); }
         }
 
-        public RelayCommand<object> CreatePersonCommand
+        public AsyncCommand<object> CreatePersonCommand
         {
-            get { return _createPersonCommand ?? (_createPersonCommand = new RelayCommand<object>(CreatePerson, CanCreatePerson)); }
+            get { return _createPersonCommand ?? (_createPersonCommand = new AsyncCommand<object>(CreatePerson, CanCreatePerson)); }
         }
 
         public RelayCommand<object> ShowOptionsDialogCommand
@@ -137,7 +137,7 @@ namespace PR.ViewModel
             ExportSelectionToGraphmlCommand.RaiseCanExecuteChanged();
         }
 
-        private void CreatePerson(object owner)
+        private async Task CreatePerson(object owner)
         {
             var dialogViewModel = new CreatePersonDialogViewModel();
 
@@ -170,7 +170,7 @@ namespace PR.ViewModel
 
             using (var unitOfWork = _unitOfWorkFactoryFacade.GenerateUnitOfWork())
             {
-                unitOfWork.People.Add(person);
+                await unitOfWork.People.Add(person);
                 unitOfWork.Complete();
             }
 

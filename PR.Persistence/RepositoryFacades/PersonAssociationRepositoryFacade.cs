@@ -26,14 +26,14 @@ namespace PR.Persistence.RepositoryFacades
             _unitOfWorkFacade = unitOfWorkFacade;
         }
 
-        public void Add(
+        public async Task Add(
             PersonAssociation personAssociation)
         {
             personAssociation.ObjectId = Guid.NewGuid();
             personAssociation.Created = DateTime.UtcNow;
             personAssociation.Superseded = _maxDate;
 
-            UnitOfWork.PersonAssociations.Add(personAssociation);
+            await UnitOfWork.PersonAssociations.Add(personAssociation);
         }
 
         public async Task<PersonAssociation> Get(

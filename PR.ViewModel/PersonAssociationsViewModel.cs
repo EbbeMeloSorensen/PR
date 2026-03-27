@@ -24,7 +24,7 @@ namespace PR.ViewModel
         private ObservableCollection<PersonAssociationViewModel> _personAssociationViewModels;
         private RelayCommand _selectionChangedCommand;
         private AsyncCommand _deleteSelectedPersonAssociationsCommand;
-        private RelayCommand<object> _createPersonAssociationCommand;
+        private AsyncCommand<object> _createPersonAssociationCommand;
         private RelayCommand<object> _updatePersonAssociationCommand;
 
         public bool IsVisible
@@ -63,12 +63,12 @@ namespace PR.ViewModel
             }
         }
 
-        public RelayCommand<object> CreatePersonAssociationCommand
+        public AsyncCommand<object> CreatePersonAssociationCommand
         {
             get
             {
                 return _createPersonAssociationCommand ?? (
-                           _createPersonAssociationCommand = new RelayCommand<object>(CreatePersonAssociation, CanCreatePersonAssociation));
+                           _createPersonAssociationCommand = new AsyncCommand<object>(CreatePersonAssociation, CanCreatePersonAssociation));
             }
         }
 
@@ -166,7 +166,7 @@ namespace PR.ViewModel
                    SelectedPersonAssociations.Objects.Any();
         }
 
-        private void CreatePersonAssociation(
+        private async Task CreatePersonAssociation(
             object owner)
         {
             var dialogViewModel = new DefinePersonAssociationDialogViewModel(
@@ -185,7 +185,7 @@ namespace PR.ViewModel
             {
                 using (var unitOfWork = _unitOfWorkFactoryFacade.GenerateUnitOfWork())
                 {
-                    unitOfWork.PersonAssociations.Add(new PersonAssociation
+                    await unitOfWork.PersonAssociations.Add(new PersonAssociation
                     {
                         SubjectPersonId = dialogViewModel.SubjectPerson.Id,
                         SubjectPersonObjectId = dialogViewModel.SubjectPerson.ObjectId,
