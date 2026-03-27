@@ -1,10 +1,8 @@
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using Craft.UI.Utils;
 using Craft.Utils;
+using Craft.ViewModel.Utils;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using PR.Application;
@@ -44,7 +42,7 @@ public class PeoplePropertiesViewModel : ViewModelBase, IDataErrorInfo
 
     private bool _isVisible;
 
-    private RelayCommand _applyChangesCommand;
+    private AsyncCommand _applyChangesCommand;
 
     public event EventHandler<PeopleEventArgs> PeopleUpdated;
 
@@ -157,9 +155,9 @@ public class PeoplePropertiesViewModel : ViewModelBase, IDataErrorInfo
         }
     }
 
-    public RelayCommand ApplyChangesCommand
+    public AsyncCommand ApplyChangesCommand
     {
-        get { return _applyChangesCommand ?? (_applyChangesCommand = new RelayCommand(ApplyChanges, CanApplyChanges)); }
+        get { return _applyChangesCommand ?? (_applyChangesCommand = new AsyncCommand(ApplyChanges, CanApplyChanges)); }
     }
 
     public PeoplePropertiesViewModel(
@@ -235,7 +233,7 @@ public class PeoplePropertiesViewModel : ViewModelBase, IDataErrorInfo
         ApplyChangesCommand.RaiseCanExecuteChanged();
     }
 
-    private void ApplyChanges()
+    private async Task ApplyChanges()
     {
         UpdateState(StateOfView.Updated);
 
@@ -270,7 +268,7 @@ public class PeoplePropertiesViewModel : ViewModelBase, IDataErrorInfo
 
         using (var unitOfWork = _unitOfWorkFactoryFacade.GenerateUnitOfWork())
         {
-            unitOfWork.People.UpdateRange(updatedPeople);
+            await unitOfWork.People.UpdateRange(updatedPeople);
             unitOfWork.Complete();
         }
 

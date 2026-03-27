@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows;
 using Craft.Utils;
 using Craft.ViewModel.Utils;
@@ -25,7 +23,7 @@ namespace PR.ViewModel
         private RelayCommand _selectionChangedCommand;
         private AsyncCommand _deleteSelectedPersonAssociationsCommand;
         private AsyncCommand<object> _createPersonAssociationCommand;
-        private RelayCommand<object> _updatePersonAssociationCommand;
+        private AsyncCommand<object> _updatePersonAssociationCommand;
 
         public bool IsVisible
         {
@@ -72,12 +70,12 @@ namespace PR.ViewModel
             }
         }
 
-        public RelayCommand<object> UpdatePersonAssociationCommand
+        public AsyncCommand<object> UpdatePersonAssociationCommand
         {
             get
             {
                 return _updatePersonAssociationCommand ?? (
-                           _updatePersonAssociationCommand = new RelayCommand<object>(UpdatePersonAssociation, CanUpdatePersonAssociation));
+                           _updatePersonAssociationCommand = new AsyncCommand<object>(UpdatePersonAssociation, CanUpdatePersonAssociation));
             }
         }
 
@@ -91,17 +89,22 @@ namespace PR.ViewModel
             _people = people;
             SelectedPersonAssociations = new ObjectCollection<PersonAssociation>();
 
-            _people.PropertyChanged += Initialize;
+            _people.PropertyChanged += async (s, e) =>
+            {
+                await Initialize(s, e);
+            };
         }
 
-        private void Initialize(object sender, PropertyChangedEventArgs e)
+        private async Task Initialize(
+            object sender,
+            PropertyChangedEventArgs e)
         {
             var temp = sender as ObjectCollection<Person>;
 
             if (temp != null && temp.Objects != null && temp.Objects.Count() == 1)
             {
                 _activePerson = temp.Objects.Single();
-                Populate();
+                await Populate();
                 IsVisible = true;
             }
             else
@@ -119,21 +122,20 @@ namespace PR.ViewModel
                 return;
             }
 
-            using (var unitOfWork = _unitOfWorkFactoryFacade.GenerateUnitOfWork())
-            {
-                var person = await unitOfWork.People.GetIncludingPersonAssociations(_activePerson.ObjectId);
+            using var unitOfWork = _unitOfWorkFactoryFacade.GenerateUnitOfWork();
 
-                PersonAssociationViewModels = new ObservableCollection<PersonAssociationViewModel>(person.ObjectPeople
+            var person = await unitOfWork.People.GetIncludingPersonAssociations(_activePerson.ObjectId);
+
+            PersonAssociationViewModels = new ObservableCollection<PersonAssociationViewModel>(person.ObjectPeople
+                .Select(pa => new PersonAssociationViewModel
+                {
+                    PersonAssociation = pa
+                })
+                .Concat(person.SubjectPeople
                     .Select(pa => new PersonAssociationViewModel
                     {
                         PersonAssociation = pa
-                    })
-                    .Concat(person.SubjectPeople
-                        .Select(pa => new PersonAssociationViewModel
-                        {
-                            PersonAssociation = pa
-                        })));
-            }
+                    })));
         }
 
         private void SelectionChanged()
@@ -157,7 +159,7 @@ namespace PR.ViewModel
                 unitOfWork.Complete();
             }
 
-            Populate();
+            await Populate();
         }
 
         private bool CanDeleteSelectedPersonAssociations()
@@ -197,7 +199,7 @@ namespace PR.ViewModel
                     unitOfWork.Complete();
                 }
 
-                Populate();
+                await Populate();
             }
         }
 
@@ -207,7 +209,7 @@ namespace PR.ViewModel
             return true;
         }
 
-        private void UpdatePersonAssociation(
+        private async Task UpdatePersonAssociation(
             object owner)
         {
             var personAssociation = SelectedPersonAssociations.Objects.Single();
@@ -230,11 +232,11 @@ namespace PR.ViewModel
 
             using (var unitOfWork = _unitOfWorkFactoryFacade.GenerateUnitOfWork())
             {
-                unitOfWork.PersonAssociations.Update(personAssociation);
+                await unitOfWork.PersonAssociations.Update(personAssociation);
                 unitOfWork.Complete();
             }
 
-            Populate();
+            await Populate();
         }
 
         private bool CanUpdatePersonAssociation(
