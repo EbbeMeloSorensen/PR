@@ -57,6 +57,15 @@ namespace PR.Persistence.RepositoryFacades
             return personAssociation;
         }
 
+        public async Task<IEnumerable<PersonAssociation>> GetAll()
+        {
+            var predicates = new List<Expression<Func<PersonAssociation, bool>>>();
+
+            AddVersionPredicates(predicates, DatabaseTime);
+
+            return await UnitOfWork.PersonAssociations.Find(predicates);
+        }
+
         public async Task<IEnumerable<PersonAssociation>> Find(
             Expression<Func<PersonAssociation, bool>> predicate)
         {

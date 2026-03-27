@@ -135,72 +135,69 @@ namespace PR.Application
             string fileName,
             ProgressCallback progressCallback = null)
         {
-            //await Task.Run(() =>
-            //{
-            //    Logger?.WriteLine(LogMessageCategory.Information, "Exporting data..");
-            //    progressCallback?.Invoke(0.0, "Exporting data");
+            Logger?.WriteLine(LogMessageCategory.Information, "Exporting data..");
+            progressCallback?.Invoke(0.0, "Exporting data");
 
-            //    _logger?.WriteLine(LogMessageCategory.Information, $"Exporting data..");
+            _logger?.WriteLine(LogMessageCategory.Information, $"Exporting data..");
 
-            //    var extension = Path.GetExtension(fileName)?.ToLower();
+            var extension = Path.GetExtension(fileName)?.ToLower();
 
-            //    if (extension == null)
-            //    {
-            //        throw new ArgumentException();
-            //    }
+            if (extension == null)
+            {
+                throw new ArgumentException();
+            }
 
-            //    _logger?.WriteLine(LogMessageCategory.Information, $"  Retrieving all person records from repository..", "general", true);
+            _logger?.WriteLine(LogMessageCategory.Information, $"  Retrieving all person records from repository..", "general", true);
 
-            //    using (var unitOfWork = _unitOfWorkFactoryFacade.GenerateUnitOfWork())
-            //    {
-            //        var people = unitOfWork.People
-            //            .GetAll()
-            //            .OrderBy(p => p.Created)
-            //            .ToList();
+            using (var unitOfWork = _unitOfWorkFactoryFacade.GenerateUnitOfWork())
+            {
+                var people = (await unitOfWork.People
+                    .GetAll())
+                    .OrderBy(p => p.Created)
+                    .ToList();
 
-            //        var personAssociations = unitOfWork.PersonAssociations
-            //            .GetAll()
-            //            .OrderBy(pa => pa.Created)
-            //            .ToList();
+                var personAssociations = (await unitOfWork.PersonAssociations
+                    .GetAll())
+                    .OrderBy(pa => pa.Created)
+                    .ToList();
 
-            //        _logger?.WriteLine(LogMessageCategory.Information, $"  Retrieved {people.Count} person records");
+                _logger?.WriteLine(LogMessageCategory.Information, $"  Retrieved {people.Count} person records");
 
-            //        var prData = new PRData
-            //        {
-            //            People = people,
-            //            PersonAssociations = personAssociations.OrderBy(pa => pa.Created).ToList()
-            //        };
+                var prData = new PRData
+                {
+                    People = people,
+                    PersonAssociations = personAssociations.OrderBy(pa => pa.Created).ToList()
+                };
 
-            //        _logger?.WriteLine(LogMessageCategory.Information, $"  Done..");
+                _logger?.WriteLine(LogMessageCategory.Information, $"  Done..");
 
-            //        switch (extension)
-            //        {
-            //            case ".xml":
-            //                {
-            //                    _logger?.WriteLine(LogMessageCategory.Information, $"  Exporting as xml..", "general", true);
-            //                    _dataIOHandler.ExportDataToXML(prData, fileName);
-            //                    _logger?.WriteLine(LogMessageCategory.Information,
-            //                        $"  Exported {people.Count} person records and {personAssociations.Count} person association records to xml file");
-            //                    break;
-            //                }
-            //            case ".json":
-            //                {
-            //                    _logger?.WriteLine(LogMessageCategory.Information, $"  Exporting as json..", "general", true);
-            //                    _dataIOHandler.ExportDataToJson(prData, fileName);
-            //                    _logger?.WriteLine(LogMessageCategory.Information,
-            //                        $"  Exported {people.Count} person records and {personAssociations.Count} person association records to json file");
-            //                    break;
-            //                }
-            //            default:
-            //                {
-            //                    throw new ArgumentException();
-            //                }
-            //        }
-            //    }
+                switch (extension)
+                {
+                    case ".xml":
+                        {
+                            _logger?.WriteLine(LogMessageCategory.Information, $"  Exporting as xml..", "general", true);
+                            _dataIOHandler.ExportDataToXML(prData, fileName);
+                            _logger?.WriteLine(LogMessageCategory.Information,
+                                $"  Exported {people.Count} person records and {personAssociations.Count} person association records to xml file");
+                            break;
+                        }
+                    case ".json":
+                        {
+                            _logger?.WriteLine(LogMessageCategory.Information, $"  Exporting as json..", "general", true);
+                            _dataIOHandler.ExportDataToJson(prData, fileName);
+                            _logger?.WriteLine(LogMessageCategory.Information,
+                                $"  Exported {people.Count} person records and {personAssociations.Count} person association records to json file");
+                            break;
+                        }
+                    default:
+                        {
+                            throw new ArgumentException();
+                        }
+                }
+            }
 
-            //    progressCallback?.Invoke(100, "");
-            //    Logger?.WriteLine(LogMessageCategory.Information, "Completed exporting data");
-            //});
+            progressCallback?.Invoke(100, "");
+            Logger?.WriteLine(LogMessageCategory.Information, "Completed exporting data");
         }
 
         public async Task ImportData(

@@ -40,5 +40,10 @@ namespace PR.Domain.Entities
         {
             FirstName = "";
         }
+
+        public override string ToString()
+        {
+            return FirstName;
+        }
     }
 }
