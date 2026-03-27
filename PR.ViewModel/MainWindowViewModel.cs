@@ -194,7 +194,7 @@ namespace PR.ViewModel
                     .ToList();
 
                 unitOfWork.PersonAssociations.RemoveRange(personAssociationsForDeletion);
-                unitOfWork.People.RemoveRange(peopleForDeletion);
+                await unitOfWork.People.RemoveRange(peopleForDeletion);
                 unitOfWork.Complete();
 
                 PersonListViewModel.RemovePeople(peopleForDeletion);
