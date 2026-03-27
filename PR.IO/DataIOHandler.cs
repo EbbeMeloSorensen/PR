@@ -76,14 +76,14 @@ namespace PR.IO
             var graph = new GraphAdjacencyList<LabelledVertex, EmptyEdge>(vertices, true);
 
             var vertexIndexMap = prData.People
-                .Select((p, i) => new { PersonID = p.Id, Index = i })
-                .ToDictionary(_ => _.PersonID, _ => _.Index);
+                .Select((p, i) => new { PersonObjectId = p.ObjectId, Index = i })
+                .ToDictionary(_ => _.PersonObjectId, _ => _.Index);
 
             foreach (var pa in prData.PersonAssociations)
             {
                 graph.AddEdge(new LabelledEdge(
-                    vertexIndexMap[pa.SubjectPersonId], 
-                    vertexIndexMap[pa.ObjectPersonId], 
+                    vertexIndexMap[pa.SubjectPersonObjectId], 
+                    vertexIndexMap[pa.ObjectPersonObjectId], 
                     pa.Description == null ? "" : pa.Description));
             }
 

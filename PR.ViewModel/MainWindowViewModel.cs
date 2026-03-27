@@ -235,13 +235,13 @@ namespace PR.ViewModel
         {
             var people = PersonListViewModel.SelectedPeople.Objects.ToList();
 
-            var personIds = people
-                .Select(p => p.Id)
+            var personObjectIds = people
+                .Select(p => p.ObjectId)
                 .ToList();
 
             var predicates = new List<Expression<Func<PersonAssociation, bool>>>();
-            predicates.Add(p => personIds.Contains(p.SubjectPersonId));
-            predicates.Add(p => personIds.Contains(p.ObjectPersonId));
+            predicates.Add(p => personObjectIds.Contains(p.SubjectPersonObjectId));
+            predicates.Add(p => personObjectIds.Contains(p.ObjectPersonObjectId));
 
             using (var unitOfWork = _unitOfWorkFactoryFacade.GenerateUnitOfWork())
             {
