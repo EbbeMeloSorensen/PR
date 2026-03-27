@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace PR.Domain.Entities
+﻿namespace PR.Domain.Entities
 {
     public class PersonAssociation : VersionedObject
     {

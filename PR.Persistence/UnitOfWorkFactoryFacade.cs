@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace PR.Persistence
+﻿namespace PR.Persistence
 {
     public class UnitOfWorkFactoryFacade
     {

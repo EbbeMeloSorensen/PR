@@ -1,8 +1,4 @@
-﻿using System.Configuration;
-using System.Data;
-using System.Windows;
-
-namespace PR.UI.WPF
+﻿namespace PR.UI.WPF
 {
     /// <summary>
     /// Interaction logic for App.xaml

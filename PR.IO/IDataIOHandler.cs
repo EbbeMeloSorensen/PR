@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using PR.Domain.Entities;
-
-namespace PR.IO
+﻿namespace PR.IO
 {
     public interface IDataIOHandler
     {

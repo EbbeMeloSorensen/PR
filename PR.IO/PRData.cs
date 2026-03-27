@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using PR.Domain.Entities;
+﻿using PR.Domain.Entities;
 
 namespace PR.IO
 {

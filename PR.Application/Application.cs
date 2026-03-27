@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Craft.Logging;
+﻿using Craft.Logging;
 using PR.Domain.Entities;
 using PR.IO;
 using PR.Persistence;

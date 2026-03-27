@@ -4,7 +4,6 @@ using Craft.UI.Utils;
 using Craft.Utils;
 using Craft.ViewModel.Utils;
 using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
 using PR.Application;
 using PR.Domain.Entities;
 using PR.Persistence;

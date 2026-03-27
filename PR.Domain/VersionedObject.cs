@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace PR.Domain
+﻿namespace PR.Domain
 {
     public abstract class VersionedObject
     {

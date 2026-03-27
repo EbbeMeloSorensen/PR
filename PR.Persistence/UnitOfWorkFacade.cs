@@ -1,5 +1,4 @@
-﻿using System;
-using PR.Persistence.RepositoryFacades;
+﻿using PR.Persistence.RepositoryFacades;
 
 namespace PR.Persistence
 {

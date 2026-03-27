@@ -1,5 +1,4 @@
-﻿using System.Linq.Expressions;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Craft.Persistence.EntityFrameworkCore;
 using PR.Domain.Entities;
 using PR.Persistence.Repositories;

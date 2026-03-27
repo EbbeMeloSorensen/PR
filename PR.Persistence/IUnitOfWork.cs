@@ -1,5 +1,4 @@
-﻿using System;
-using PR.Persistence.Repositories;
+﻿using PR.Persistence.Repositories;
 
 namespace PR.Persistence
 {

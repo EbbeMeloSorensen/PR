@@ -1,20 +1,16 @@
-using System;
 using System.ComponentModel;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 using System.Windows;
+using Microsoft.Win32;
+using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using Craft.Logging;
 using Craft.ViewModel.Utils;
 using Craft.ViewModels.Dialogs;
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
-using Microsoft.Win32;
-using PR.Application;
 using PR.Domain.Entities;
 using PR.IO;
 using PR.Persistence;
+using PR.Application;
 
 namespace PR.ViewModel
 {
