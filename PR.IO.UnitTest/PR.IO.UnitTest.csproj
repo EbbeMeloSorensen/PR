@@ -10,6 +10,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Data\People.json" />
+    <None Remove="Data\People.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Data\People.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\People.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="coverlet.collector" Version="6.0.0" />
     <PackageReference Include="FluentAssertions" Version="8.9.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />

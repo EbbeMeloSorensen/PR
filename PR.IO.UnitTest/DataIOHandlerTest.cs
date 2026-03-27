@@ -41,7 +41,17 @@ namespace PR.IO.UnitTest
 
             prData.People.Count.Should().Be(3);
             prData.People.Count(p => p.FirstName == "Ebbe").Should().Be(1);
+            prData.People.Count(p => p.FirstName == "Ana Tayze").Should().Be(1);
             prData.People.Count(p => p.FirstName == "Uffe").Should().Be(1);
+
+            var ebbe = prData.People.Single(p => p.FirstName == "Ebbe");
+            ebbe.ObjectId.Should().Be("00000000-0000-0000-0000-000000000001");
+
+            var ana = prData.People.Single(p => p.FirstName == "Ana Tayze");
+            ana.ObjectId.Should().Be("00000000-0000-0000-0000-000000000002");
+
+            var uffe = prData.People.Single(p => p.FirstName == "Uffe");
+            uffe.ObjectId.Should().Be("00000000-0000-0000-0000-000000000003");
         }
 
         // Helper
@@ -52,6 +62,7 @@ namespace PR.IO.UnitTest
             var ebbe = new Person
             {
                 Id = Guid.NewGuid(),
+                ObjectId = new Guid("00000000-0000-0000-0000-000000000001"),
                 FirstName = "Ebbe",
                 Surname = "Melo Sørensen",
                 Nickname = "Bebsen",
@@ -68,6 +79,7 @@ namespace PR.IO.UnitTest
             var ana = new Person
             {
                 Id = Guid.NewGuid(),
+                ObjectId = new Guid("00000000-0000-0000-0000-000000000002"),
                 FirstName = "Ana Tayze",
                 Surname = "Melo Sørensen",
                 Created = now
@@ -76,6 +88,7 @@ namespace PR.IO.UnitTest
             var uffe = new Person
             {
                 Id = Guid.NewGuid(),
+                ObjectId = new Guid("00000000-0000-0000-0000-000000000003"),
                 FirstName = "Uffe",
                 Surname = "Sørensen",
                 Created = now
@@ -94,18 +107,24 @@ namespace PR.IO.UnitTest
                     new()
                     {
                         Id = Guid.NewGuid(),
+                        ObjectId = new Guid("00000000-0000-0000-0001-000000000000"),
                         Description = "is the brother of",
                         Created = now,
+                        SubjectPersonId = uffe.Id,
+                        SubjectPersonObjectId = uffe.ObjectId,
                         ObjectPersonId = ebbe.Id,
-                        SubjectPersonId = uffe.Id
+                        ObjectPersonObjectId = ebbe.ObjectId
                     },
                     new()
                     {
                         Id = Guid.NewGuid(),
+                        ObjectId = new Guid("00000000-0000-0000-0002-000000000000"),
                         Description = "is married with",
                         Created = now,
+                        SubjectPersonId = ebbe.ObjectId,
+                        SubjectPersonObjectId = ana.ObjectId,
                         ObjectPersonId = ana.Id,
-                        SubjectPersonId = ebbe.Id
+                        ObjectPersonObjectId = ana.ObjectId
                     }
                 }
             };
