@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 using PR.Domain;
 using PR.Domain.Entities;
 
@@ -55,14 +52,14 @@ namespace PR.Persistence.RepositoryFacades
             return UnitOfWork.People.Count(predicates);
         }
 
-        public void Add(
+        public async Task Add(
             Person person)
         {
             person.ObjectId = Guid.NewGuid();
             person.Created = DateTime.UtcNow;
             person.Superseded = _maxDate;
 
-            UnitOfWork.People.Add(person);
+            await UnitOfWork.People.Add(person);
         }
 
         public async Task<Person> Get(
