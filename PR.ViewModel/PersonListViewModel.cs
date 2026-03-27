@@ -6,6 +6,7 @@ using System.Windows;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Craft.Utils;
+using Craft.ViewModel.Utils;
 using Craft.ViewModels.Dialogs;
 using PR.Domain;
 using PR.Domain.Entities;
@@ -22,7 +23,7 @@ namespace PR.ViewModel
 
         public FindPeopleViewModel FindPeopleViewModel { get; }
 
-        private RelayCommand<object> _findPeopleCommand;
+        private AsyncCommand<object> _findPeopleCommand;
 
         public ObservableCollection<PersonViewModel> PersonViewModels { get; }
 
@@ -42,11 +43,11 @@ namespace PR.ViewModel
             }
         }
 
-        public RelayCommand<object> FindPeopleCommand
+        public AsyncCommand<object> FindPeopleCommand
         {
             get
             {
-                return _findPeopleCommand ?? (_findPeopleCommand = new RelayCommand<object>(FindPeople));
+                return _findPeopleCommand ?? (_findPeopleCommand = new AsyncCommand<object>(FindPeople));
             }
         }
 
@@ -171,7 +172,7 @@ namespace PR.ViewModel
             });
         }
 
-        private void FindPeople(object owner)
+        private async Task FindPeople(object owner)
         {
             var personLimit = 10;
             var count = CountPeopleMatchingFilterFromRepository();
@@ -191,7 +192,7 @@ namespace PR.ViewModel
                 }
             }
 
-            RetrievePeopleMatchingFilterFromRepository();
+            await RetrievePeopleMatchingFilterFromRepository();
             UpdatePersonViewModels();
         }
     }
