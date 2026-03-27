@@ -7,7 +7,7 @@ namespace PR.Domain
         public static PersonAssociation Clone(
             this PersonAssociation personAssociation)
         {
-            return new PersonAssociation
+            rreturn new PersonAssociation
             {
                 Id = personAssociation.Id,
                 ObjectId = personAssociation.ObjectId,
