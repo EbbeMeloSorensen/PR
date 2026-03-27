@@ -34,6 +34,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PR.Persistence.EntityFramew
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PR.Persistence.UnitTest", "PR.Persistence.UnitTest\PR.Persistence.UnitTest.csproj", "{67001F3C-18BD-4A3A-B9B4-87D4C640C893}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PR.Persistenec.EntityFrameworkCore.InMemory", "PR.Persistenec.EntityFrameworkCore.InMemory\PR.Persistenec.EntityFrameworkCore.InMemory.csproj", "{A5C085A4-2E94-46EB-84A6-1FF64FC2350E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -92,6 +94,10 @@ Global
 		{67001F3C-18BD-4A3A-B9B4-87D4C640C893}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{67001F3C-18BD-4A3A-B9B4-87D4C640C893}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{67001F3C-18BD-4A3A-B9B4-87D4C640C893}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5C085A4-2E94-46EB-84A6-1FF64FC2350E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5C085A4-2E94-46EB-84A6-1FF64FC2350E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5C085A4-2E94-46EB-84A6-1FF64FC2350E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5C085A4-2E94-46EB-84A6-1FF64FC2350E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
