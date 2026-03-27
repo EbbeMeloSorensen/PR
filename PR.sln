@@ -18,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PR.Persistence.EntityFramew
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PR.Persistence.EntityFrameworkCore.Helper", "PR.Persistence.EntityFrameworkCore.Helper\PR.Persistence.EntityFrameworkCore.Helper.csproj", "{FA520E91-B753-4CD3-9659-8C0A6ABB5807}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PR.IO", "PR.IO\PR.IO.csproj", "{1E670799-9FED-49DB-AF6E-5191350EF4A3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,10 @@ Global
 		{FA520E91-B753-4CD3-9659-8C0A6ABB5807}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA520E91-B753-4CD3-9659-8C0A6ABB5807}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA520E91-B753-4CD3-9659-8C0A6ABB5807}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E670799-9FED-49DB-AF6E-5191350EF4A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E670799-9FED-49DB-AF6E-5191350EF4A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E670799-9FED-49DB-AF6E-5191350EF4A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E670799-9FED-49DB-AF6E-5191350EF4A3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
